@@ -69,7 +69,7 @@ sub manage_articles {
 		$template->param( comments_to_moderate => 1);
 	}
 	$template->param( view => $view, blog_title => $blog_title, articles => get_articles() );
-	print "Content-Type: text/html\n\n", $template->output;
+	print $cgi->header(), $template->output;
 }
 
 sub manage_comments {
@@ -92,7 +92,7 @@ sub manage_comments {
 	}
 
 	$template->param( view => $view, blog_title => $blog_title, comments => get_comments() );
-	print "Content-Type: text/html\n\n", $template->output;
+	print $cgi->header(), $template->output;
 }
 
 sub edit_article {
@@ -107,7 +107,7 @@ sub edit_article {
 		$template->param( uri => $uri ) if ($uri);
 		$template->param( body => $cgi->param('body') ) if ($cgi->param('body'));
 		$template->param( tags => $cgi->param('tags') ) if ($cgi->param('tags'));
-		print "Content-Type: text/html\n\n", $template->output;
+		print $cgi->header(), $template->output;
 
 	# save edits, with id (update)
 	} elsif ($cgi->param('save') && $cgi->param('id')) {
@@ -127,7 +127,7 @@ sub edit_article {
 			$template->param( uri => $cgi->param('uri') ) if ($cgi->param('uri'));
 			$template->param( body => $cgi->param('body') ) if ($cgi->param('body'));
 			$template->param( tags => $cgi->param('tags') ) if ($cgi->param('tags'));
-			print "Content-Type: text/html\n\n", $template->output;
+			print $cgi->header(), $template->output;
 		}
 
 	# save new, no id (insert)
@@ -149,7 +149,7 @@ sub edit_article {
 			$template->param( uri => $cgi->param('uri') ) if ($cgi->param('uri'));
 			$template->param( body => $cgi->param('body') ) if ($cgi->param('body'));
 			$template->param( tags => $cgi->param('tags') ) if ($cgi->param('tags'));
-			print "Content-Type: text/html\n\n", $template->output;
+			print $cgi->header(), $template->output;
 		}
 
 	# edit an existing
@@ -161,7 +161,7 @@ sub edit_article {
 		if ($result) {
 			$template->param( view => $view, blog_title => $blog_title, edit => 1 );
 			$template->param( $result );
-			print "Content-Type: text/html\n\n", $template->output;
+			print $cgi->header(), $template->output;
 		} else {
 			$template->param( error => 'no results found' );
 			manage_articles();
@@ -170,7 +170,7 @@ sub edit_article {
 	# brand new, show form
 	} else {
 		$template->param( view => $view, blog_title => $blog_title, edit => 1 );
-		print "Content-Type: text/html\n\n", $template->output;
+		print $cgi->header(), $template->output;
 	}
 }
 
