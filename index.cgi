@@ -74,7 +74,7 @@ sub output_rss {
 	);
 	my $articles = get_articles();
 	for my $item (@{$articles}) {
-		$item->{'date'} =~ /(\d+)\-(\d+)\-\d+ \d+\:\d+\:\d+/;
+		$item->{'date'} =~ /(\d{4})\-(\d{2})\-\d{2} \d{2}\:\d{2}\:\d{2}/;
 		($item->{'year'}, $item->{'month'}) = ($1, $2);
 		$rss->add_item (
 			title => $item->{'title'},
@@ -95,12 +95,11 @@ sub get_articles {
 	my $criteria;
 	my $c=0;
 	my $show_comments=0;
-	my $query;
 
-	if (($cgi->param('year') =~ /\d+/)&& (1900 < $cgi->param('year')) && ($cgi->param('year') < 2036)) {
+	if (($cgi->param('year') =~ /\d{4}/)&& (1900 < $cgi->param('year')) && ($cgi->param('year') < 2036)) {
 		$criteria .= 'WHERE date LIKE \'' . $cgi->param('year');
 		$c++;
-		if (($cgi->param('month') =~ /\d+/) && (0 < $cgi->param('month')) && ($cgi->param('month') < 12)) {
+		if (($cgi->param('month') =~ /\d{2}/) && (0 < $cgi->param('month')) && ($cgi->param('month') < 12)) {
 			$criteria .= '-' . $cgi->param('month') . '%\' ';
 			$c++;
 			if ($cgi->param('uri') =~ /\w+/) {
@@ -135,7 +134,7 @@ sub get_articles {
 
 	my @articles;
 	while (my $result = $sth->fetchrow_hashref) {
-		$result->{'date'} =~ /(\d+)\-(\d+)\-\d+ \d+\:\d+\:\d+/;
+		$result->{'date'} =~ /(\d{4})\-(\d{2})\-\d{2} \d{2}\:\d{2}\:\d{2}/;
 		($result->{'year'}, $result->{'month'}) = ($1, $2);
 		$result->{'tag_loop'} = format_tags($result->{'tags'}) if ($result->{'tags'});
 		if ($show_comments) {
