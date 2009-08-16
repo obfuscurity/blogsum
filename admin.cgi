@@ -65,6 +65,9 @@ sub manage_articles {
 		$sth->execute($status, $article_id) || die $dbh->errstr;
 	}
 
+	if (@{get_comments()} > 0) {
+		$template->param( comments_to_moderate => 1);
+	}
 	$template->param( view => $view, blog_title => $blog_title, articles => get_articles() );
 	print "Content-Type: text/html\n\n", $template->output;
 }

@@ -20,6 +20,7 @@ h2#article_title, a#mod_story { color: #a14732; }
 p#tags { text-align: right; margin-bottom: 30px; }
 a#tags { text-decoration: none; border-bottom: 1px dashed; color: #09c; }
 h3 { font-size: 0.9em; }
+h3#header { margin-bottom: 30px; }
 h3#error { font-size: 1.1em; color: #c00; }
 h4#message { font-size: 0.9em; color: #060; }
 p { font-size: 0.7em; }
