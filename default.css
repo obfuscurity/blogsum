@@ -1,0 +1,26 @@
+* { font-family: Georgia, Palatino, Palatino Linotype, Times, Times New Roman, serif; }
+img { border: 0; }
+div#wrapper { margin-left: 25%; margin-right: 25%; }
+div#preview { padding-left: 5%; padding-right: 5%; margin-bottom: 30px; background-color: #eee; border: 1px dotted black; }
+h1#title { text-align: right; margin-bottom: 50px; }
+a#title, a#article_title { text-decoration: none; color: #aaa; }
+a#view { text-decoration: none; color: #777; }
+a#header { color: #777; }
+a#mod_story { font-size: 1.3em; font-weight: bold; }
+#mod_user, #mod_date { font-size: 1.1em; font-weight: bold; }
+#date { font-size: 1.0em; font-weight: bold; }
+#comment_body { padding: 0 0 18px 10px; }
+a#publish { text-decoration: none; color: #3c0; }
+a#edit { text-decoration: none; color: #03f; }
+a#draft { text-decoration: none; color: #f90; }
+a#delete { text-decoration: none; color: #f00; }
+h1 { font-size: 1.5em; }
+h2 { font-size: 1.3em; }
+h2#article_title, a#mod_story { color: #a14732; }
+p#tags { text-align: right; margin-bottom: 30px; }
+a#tags { text-decoration: none; border-bottom: 1px dashed; color: #09c; }
+h3 { font-size: 0.9em; }
+h3#error { font-size: 1.1em; color: #c00; }
+h4#message { font-size: 0.9em; color: #060; }
+p { font-size: 0.7em; }
+pre { font-size: 0.7em; }

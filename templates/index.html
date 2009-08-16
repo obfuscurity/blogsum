@@ -1,0 +1,56 @@
+<html>
+<head>
+<title><TMPL_VAR name="title"></title>
+<link rel="stylesheet" type="text/css" href="/default.css" title="Default">
+<TMPL_VAR name="captcha_options">
+</head>
+<body>
+
+<div id="wrapper">
+<h1 id="title"><a id="title" href="/"><TMPL_VAR name="title"></a>
+<a href="/rss.xml"><img src="/images/xml.gif" alt="RSS 1.0"></a></h1>
+
+
+<TMPL_LOOP name="articles">
+	<a id="article_title" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">"><h2 id="article_title"><TMPL_VAR name="title"></h2></a>
+	<h3 id="article_date"><TMPL_VAR name="date"></h3>
+	<p id="article_body"><TMPL_VAR name="body"></p>
+	<TMPL_IF name="tag_loop">
+	<p id="tags">Tags: <TMPL_LOOP name="tag_loop"> &nbsp;<a id="tags" href="/Tags/<TMPL_VAR name="tag">"><TMPL_VAR name="tag"></a></TMPL_LOOP></p>
+	</TMPL_IF>
+
+	<TMPL_IF name="comments">
+	<hr style="height: 1px; width: 100%; margin-top: 40px; margin-bottom: 40px; color: #999; background-color: #999; border: 0;"></hr>
+	<h4>Comments</h4>
+	<TMPL_LOOP name="comments">
+		<p>at <span id="date"><TMPL_VAR name="date"></span>, <TMPL_IF name="url"><a href="<TMPL_VAR name="url">"></TMPL_IF><TMPL_VAR name="name"><TMPL_IF name="url"></a></TMPL_IF> wrote in to say...</p>
+		<p id="comment_body"><TMPL_VAR name="comment"></p>
+	</TMPL_LOOP>
+	</TMPL_IF>
+</TMPL_LOOP>
+
+<TMPL_IF name="error"><h3 id="error"><img src="/images/asterisk-red.gif" style="height: 20px; padding-right: 5px;"><TMPL_VAR name="error"></h3></TMPL_IF>
+<TMPL_IF name="message"><h4 id="message"><img src="/images/asterisk-green.gif" style="height: 20px; padding-right: 5px;"><TMPL_VAR name="message"></h4></TMPL_IF>
+
+<TMPL_IF name="comment_form">
+<hr style="height: 1px; width: 100%; margin-top: 20px; margin-bottom: 25px; color: #999; background-color: #999; border: 0;"></hr>
+	<div id="comment_form">
+	<p>Add a comment:</p>
+	<form id="comment_form" action="/index.cgi" method="post">
+		<p><input name="name" size="40" value="<TMPL_VAR name="name">"> &nbsp; name</p>
+		<p><input name="email" size="40" value="<TMPL_VAR name="email">"> &nbsp; email</p>
+		<p><input name="url" size="40" value="<TMPL_VAR name="url">"> &nbsp; url</p>
+		<p>max length <TMPL_VAR name="comment_max_length"> chars<br><textarea rows="3" cols="30" name="comment"><TMPL_VAR name="comment"></textarea></p>
+		<TMPL_VAR name="captcha">
+		<p><input type="submit" name="submit" value="submit comment"></p>
+		<input type="hidden" name="id" value="<TMPL_VAR name="id">">
+	</form>
+	</div>
+</TMPL_IF>
+
+</div>
+
+<pre><TMPL_VAR name="dump"></pre>
+
+</body>
+</html>
