@@ -44,6 +44,7 @@ if ($cgi->param('rss1')) {
 	} else {
 		$template->param( error => '404 post not found' );
 	}
+	$template->param( copyright => $feed_rights );
 	print $cgi->header(), $template->output;
 }
 $dbh->disconnect;
