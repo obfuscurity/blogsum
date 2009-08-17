@@ -1,20 +1,24 @@
 <html>
 <head>
 <title><TMPL_VAR name="title"></title>
-<link rel="stylesheet" type="text/css" href="/default.css" title="Default">
+<link rel="stylesheet" type="text/css" href="/test.css" title="Default">
 <TMPL_VAR name="captcha_options">
 </head>
 <body>
 
 <div id="wrapper">
+<div id="header">
 <h1 id="title"><a id="title" href="/"><TMPL_VAR name="title"></a>
 <a href="/rss.xml"><img src="/images/xml.gif" alt="RSS 1.0"></a></h1>
+</div>
 
-
+<div id="main">
 <TMPL_LOOP name="articles">
 	<a id="article_title" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">"><h2 id="article_title"><TMPL_VAR name="title"></h2></a>
 	<h3 id="article_date"><TMPL_VAR name="date"></h3>
-	<p id="article_body"><TMPL_VAR name="body"></p>
+	<div id="article_body">
+	<TMPL_VAR name="body">
+	</div>
 	<TMPL_IF name="tag_loop">
 	<p id="tags">Tags: <TMPL_LOOP name="tag_loop"> &nbsp;<a id="tags" href="/Tags/<TMPL_VAR name="tag">"><TMPL_VAR name="tag"></a></TMPL_LOOP></p>
 	</TMPL_IF>
@@ -47,7 +51,27 @@
 	</form>
 	</div>
 </TMPL_IF>
+</div>
 
+<div id="sidebar">
+	<h3 id="archive">Archive</h3>
+	<p id="archive">
+	<TMPL_LOOP name="archives">
+		<TMPL_IF name="uri">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="archive" title="<TMPL_VAR name="full_title">" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">"><TMPL_VAR name="title"></a><br>
+		<TMPL_ELSE>
+			<TMPL_IF name="month">
+				&nbsp;&nbsp;&nbsp;<a id="archive" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/"><TMPL_VAR name="month_name"></a><br>
+			<TMPL_ELSE>
+				<a id="archive" href="/<TMPL_VAR name="year">/"><TMPL_VAR name="year"></a><br>
+			</TMPL_IF>
+		</TMPL_IF>
+	</TMPL_LOOP>
+	</p>
+</div>
+
+<div id="footer">
+</div>
 </div>
 
 <pre><TMPL_VAR name="dump"></pre>

@@ -31,6 +31,8 @@ if ($cgi->param('rss1')) {
 } else {
 	read_comment();
 	my $articles = get_articles();
+	my $archives = get_archives();
+	$template->param(archives => $archives);
 	$template->param( title => $blog_title );
 	if (@{$articles}) {
 		$template->param( articles => $articles );
@@ -97,10 +99,10 @@ sub get_articles {
 	my $show_comments=0;
 
 	if (($cgi->param('year') =~ /\d{4}/)&& (1900 < $cgi->param('year')) && ($cgi->param('year') < 2036)) {
-		$criteria .= 'WHERE date LIKE \'' . $cgi->param('year');
+		$criteria .= 'WHERE date LIKE \'%' . $cgi->param('year');
 		$c++;
 		if (($cgi->param('month') =~ /\d{2}/) && (0 < $cgi->param('month')) && ($cgi->param('month') < 12)) {
-			$criteria .= '-' . $cgi->param('month') . '%\' ';
+			$criteria .= '-' . $cgi->param('month') . '%\' AND enabled=1 ';
 			$c++;
 			if ($cgi->param('uri') =~ /\w+/) {
 				$criteria .= 'AND uri=? AND enabled=1 ';
@@ -143,6 +145,60 @@ sub get_articles {
 		push(@articles, $result);
 	}
 	return (\@articles);
+}
+
+sub get_archives {
+
+	my %history;
+	my @archives;
+	my %months = (
+			'01' => 'January',
+			'02' => 'February',
+			'03' => 'March',
+			'04' => 'April',
+			'05' => 'May',
+			'06' => 'June',
+			'07' => 'July',
+			'08' => 'August',
+			'09' => 'September',
+			'10' => 'October',
+			'11' => 'November',
+			'12' => 'December',
+	);
+
+	my $query = 'SELECT * FROM articles WHERE enabled=1 ORDER BY date DESC';
+	my $sth = $dbh->prepare($query);
+	$sth->execute || die $dbh->errstr;
+	while (my $result = $sth->fetchrow_hashref) {
+		$result->{'date'} =~ /(\d{4})\-(\d{2})\-\d{2} \d{2}\:\d{2}\:\d{2}/;
+		($result->{'year'}, $result->{'month'}) = ($1, $2);
+		unless ($history{$result->{'year'}}) {
+			push(@archives, { year => $result->{'year'} });
+			$history{$result->{'year'}}{'exists'}++;
+		}
+		unless ($history{$result->{'year'}}{$result->{'month'}}) {
+			push(@archives, {
+					year => $result->{'year'},
+					month => $result->{'month'},
+					month_name => $months{$result->{'month'}},
+			});
+			$history{$result->{'year'}}{$result->{'month'}}{'exists'}++;
+		}
+		my $title = my $full_title = $result->{'title'};
+		#my $title = $full_title;
+		if (length($title) > 28) {
+			$title = substr($title, 0, 25) . '...';
+		}
+		push(@archives, {
+				year => $result->{'year'},
+				month => $result->{'month'},
+				month_name => $months{$result->{'month'}},
+				title => $title,
+				full_title => $full_title,
+				uri => $result->{'uri'},
+		});
+	}
+	return \@archives;
 }
 
 sub format_tags {
