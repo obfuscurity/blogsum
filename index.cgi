@@ -256,9 +256,9 @@ sub read_comment {
 sub get_comments {
 
 	my %args = @_;
+
 	my $query = 'SELECT * FROM comments WHERE article_id=? AND enabled=? ORDER BY date DESC';
 	my $sth = $dbh->prepare($query);
-
 	$sth->execute($args{'article_id'}, $args{'enabled'}) || die $dbh->errstr;
 	my @comments;
 	while (my $result = $sth->fetchrow_hashref) { 
