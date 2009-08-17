@@ -182,9 +182,9 @@ sub get_articles {
 
 	my @articles;
 	while (my $result = $sth->fetchrow_hashref) {
-		$result->{'date'} =~ /(\d+)\-(\d+)\-\d+ \d+\:\d+\:\d+/;
+		$result->{'date'} =~ /(\d{4})\-(\d{2})\-\d{2} \d{2}\:\d{2}\:\d{2}/;
 		($result->{'year'}, $result->{'month'}) = ($1, $2);
-		$result->{'date'} =~ s/(\d+\-\d+\-\d+) \d+\:\d+\:\d+/$1/;
+		$result->{'date'} =~ s/(\d{4}\-\d{2}\-\d{2}) \d{2}\:\d{2}\:\d{2}/$1/;
 		delete $result->{'enabled'} if ($result->{'enabled'} == 0);
 		push(@articles, $result);
 	}
@@ -200,7 +200,7 @@ sub get_comments {
 
 	my @comments;
 	while (my $result = $sth->fetchrow_hashref) { 
-		$result->{'article_date'} =~ /(\d+)\-(\d+)\-\d+ \d+\:\d+\:\d+/;
+		$result->{'article_date'} =~ /(\d{4})\-(\d{2})\-\d{2} \d{2}\:\d{2}\:\d{2}/;
 		($result->{'article_year'}, $result->{'article_month'}) = ($1, $2);
 		push(@comments, $result);
 	}
