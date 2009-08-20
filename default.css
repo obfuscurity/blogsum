@@ -11,7 +11,7 @@ span#subtitle { font-size: 0.5em; color: #ccc; }
 a#title, a#article_title { text-decoration: none; color: #aaa; }
 a#view { text-decoration: none; color: #777; }
 a#header { color: #777; }
-a#mod_story { font-size: 1.3em; font-weight: bold; }
+a#mod_story, span#mod_story_disabled { font-size: 1.3em; font-weight: bold; }
 #mod_user, #mod_date { font-size: 1.1em; font-weight: bold; }
 #date { font-size: 1.0em; font-weight: bold; }
 #comment_body { padding: 0 0 18px 10px; }
@@ -22,6 +22,7 @@ a#delete { text-decoration: none; color: #f00; }
 h1 { font-size: 1.8em; }
 h2 { font-size: 1.3em; }
 h2#article_title, a#mod_story { color: #a14732; }
+span#mod_story_disabled { color: #999; }
 p#tags { text-align: right; margin-bottom: 30px; }
 a#tags { text-decoration: none; border-bottom: 1px dashed; color: #09c; }
 h3 { font-size: 0.9em; }
