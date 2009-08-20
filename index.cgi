@@ -10,10 +10,10 @@
 my $database = 'data/site.db';
 my $tmplfile = 'templates/index.html';
 my $blog_title = 'example.com';
+my $blog_subtitle = 'My New Blog';
 my $blog_url = 'http://www.example.com/';
-my $feed_motto = 'My New Blog';
-my $feed_owner = 'user@example.com';
-my $feed_rights = 'Copyright 2009, Example User';
+my $blog_owner = 'user@example.com';
+my $blog_rights = 'Copyright 2009, Example User';
 my $feed_updates = 'hourly';
 my $captcha_pubkey = '';
 my $captcha_seckey = '';
@@ -32,8 +32,10 @@ if ($cgi->param('rss1')) {
 	read_comment();
 	my $articles = get_articles();
 	my $archives = get_archives();
-	$template->param(archives => $archives);
+	$template->param( archives => $archives );
 	$template->param( title => $blog_title );
+	$template->param( subtitle => $blog_subtitle );
+	$template->param( copyright => $blog_rights );
 	if (@{$articles}) {
 		$template->param( articles => $articles );
 	 	if ($cgi->param('uri')) {
@@ -44,7 +46,6 @@ if ($cgi->param('rss1')) {
 	} else {
 		$template->param( error => '404 post not found' );
 	}
-	$template->param( copyright => $feed_rights );
 	print $cgi->header(), $template->output;
 }
 $dbh->disconnect;
@@ -61,7 +62,7 @@ sub output_rss {
 	$rss->channel (
 		title => $blog_title,
 		link => $blog_url,
-		description => $feed_motto,
+		description => $blog_subtitle,
 		dc => {
 			subject => $blog_title,
 			creator => $feed_owner,

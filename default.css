@@ -6,7 +6,8 @@ div#main { width: 70%; float: left; border: 0px solid black; }
 div#sidebar { width: 30%; float: left; border: 0px solid black; }
 div#footer { width: 100%; padding-top: 20px; clear: both; text-align: center; }
 div#preview { padding-left: 5%; padding-right: 5%; margin-bottom: 30px; background-color: #eee; border: 1px dotted black; }
-h1#title { text-align: right; margin-right: 1em; }
+h1#title { text-align: left; margin-right: 1em; }
+span#subtitle { font-size: 0.5em; color: #ccc; }
 a#title, a#article_title { text-decoration: none; color: #aaa; }
 a#view { text-decoration: none; color: #777; }
 a#header { color: #777; }
@@ -25,11 +26,11 @@ p#tags { text-align: right; margin-bottom: 30px; }
 a#tags { text-decoration: none; border-bottom: 1px dashed; color: #09c; }
 h3 { font-size: 0.9em; }
 h3#header { margin-bottom: 30px; }
-h3#archive { font-size: 1.1em; color: #777; padding-left: 20px; }
+h3#archive, h3#feeds { font-size: 1.1em; color: #777; padding-left: 30px; }
 h3#error { font-size: 1.1em; color: #c00; }
 h4#message { font-size: 0.9em; color: #060; }
 p { font-size: 0.7em; }
-p#archive { padding-left: 20px; }
-a#archive { color: #c66; text-decoration: none; font-weight: bold; }
+p#archive, p#feeds { padding-left: 30px; }
+a#archive, a#feeds { color: #c66; text-decoration: none; font-weight: bold; }
 p#footer { color: #aaa; }
 pre { font-size: 0.7em; }

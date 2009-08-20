@@ -8,8 +8,8 @@
 
 <div id="wrapper">
 <div id="header">
-<h1 id="title"><a id="title" href="/"><TMPL_VAR name="title"></a>
-<a href="/rss.xml"><img src="/images/xml.gif" alt="RSS 1.0"></a></h1>
+<h1 id="title"><a id="title" href="/"><TMPL_VAR name="title"></a><br>
+<span id="subtitle"><TMPL_VAR name="subtitle"></span><br></h1>
 </div>
 
 <div id="main">
@@ -58,16 +58,19 @@
 	<p id="archive">
 	<TMPL_LOOP name="archives">
 		<TMPL_IF name="uri">
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="archive" title="<TMPL_VAR name="full_title">" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">"><TMPL_VAR name="title"></a><br>
+			<a id="archive" style="padding-left: 20px;" title="<TMPL_VAR name="full_title">" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">"><TMPL_VAR name="title"></a><br>
 		<TMPL_ELSE>
 			<TMPL_IF name="month">
-				&nbsp;&nbsp;&nbsp;<a id="archive" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/"><TMPL_VAR name="month_name"></a><br>
+				<a id="archive" style="padding-left: 10px;" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/"><TMPL_VAR name="month_name"></a><br>
 			<TMPL_ELSE>
 				<a id="archive" href="/<TMPL_VAR name="year">/"><TMPL_VAR name="year"></a><br>
 			</TMPL_IF>
 		</TMPL_IF>
 	</TMPL_LOOP>
 	</p>
+
+	<h3 id="feeds">Feeds</h3>
+	<p id="feeds"><a id="feeds" style="padding-left: 20px;" href="/rss.xml"><img src="/images/xml.gif" alt="RSS 1.0" style="padding-right: 7px;">RSS 1.0</a></p>
 </div>
 
 <div id="footer">
