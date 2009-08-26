@@ -97,18 +97,18 @@ sub output_rss {
 sub get_articles {
 
 	my $criteria;
-	my $c=0;
+	my $j=0;
 	my $show_comments=0;
 
 	if (($cgi->param('year') =~ /\d{4}/)&& (1900 < $cgi->param('year')) && ($cgi->param('year') < 2036)) {
 		$criteria .= 'WHERE date LIKE \'%' . $cgi->param('year');
-		$c++;
+		$j++;
 		if (($cgi->param('month') =~ /\d{2}/) && (0 < $cgi->param('month')) && ($cgi->param('month') < 12)) {
 			$criteria .= '-' . $cgi->param('month') . '%\' AND enabled=1 ';
-			$c++;
+			$j++;
 			if ($cgi->param('uri') =~ /\w+/) {
 				$criteria .= 'AND uri=? AND enabled=1 ';
-				$c++;
+				$j++;
 				$show_comments=1;
 			}
 		} else {
@@ -126,7 +126,7 @@ sub get_articles {
 	my $query = 'SELECT * FROM articles ' . $criteria . 'ORDER BY date DESC';
 	my $sth = $dbh->prepare($query);
 	
-	if ($c == 3) {
+	if ($j == 3) {
 		$sth->execute($cgi->param('uri')) || die $dbh->errstr;
 	} elsif ($cgi->param('search')) {
 		$sth->execute(sprintf("%%%s%%", $cgi->param('search'))) || die $dbh->errstr;
@@ -141,8 +141,10 @@ sub get_articles {
 		$result->{'date'} =~ /(\d{4})\-(\d{2})\-\d{2} \d{2}\:\d{2}\:\d{2}/;
 		($result->{'year'}, $result->{'month'}) = ($1, $2);
 		$result->{'tag_loop'} = format_tags($result->{'tags'}) if ($result->{'tags'});
+		my $comments = get_comments(article_id => $result->{'id'}, enabled => 1);
+		$result->{'comments_count'} = scalar(@{$comments});
 		if ($show_comments) {
-			$result->{'comments'} = get_comments(article_id => $result->{'id'}, enabled => 1);
+			$result->{'comments'} = $comments;
 		}
 		push(@articles, $result);
 	}
@@ -258,7 +260,7 @@ sub get_comments {
 
 	my %args = @_;
 
-	my $query = 'SELECT * FROM comments WHERE article_id=? AND enabled=? ORDER BY date DESC';
+	my $query = 'SELECT * FROM comments WHERE article_id=? AND enabled=? ORDER BY date ASC';
 	my $sth = $dbh->prepare($query);
 	$sth->execute($args{'article_id'}, $args{'enabled'}) || die $dbh->errstr;
 	my @comments;
