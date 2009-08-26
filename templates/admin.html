@@ -6,7 +6,8 @@
 <body>
 
 <div id="wrapper">
-<h1 id="title"><a id="title" href="/admin.cgi"><TMPL_VAR name="blog_title"></a><a id="view" href="/admin.cgi?view=<TMPL_VAR name="view">"><TMPL_VAR name="view">.</a></h1>
+
+<h1 class="title"><a href="/admin.cgi"><TMPL_VAR name="blog_title"></a><a id="view" href="/admin.cgi?view=<TMPL_VAR name="view">"><TMPL_VAR name="view">.</a></h1>
 
 <h3 id="header"><a id="header" href="?view=edit">create</a> / <a id="header" <TMPL_IF name="comments_to_moderate">style="color: #f00;"</TMPL_IF> href="?view=moderate">moderate</a> / <a id="header" href="?view=administrate">administrate</a></h3>
 
@@ -15,9 +16,9 @@
 <TMPL_IF name="preview">
 <!-- preview articles -->
 	<div id="preview">
-		<h2 id="article_title"><TMPL_VAR name="title"></h2>
+		<h2 class="article_title"><TMPL_VAR name="title"></h2>
 		<h3 id="article_date"><TMPL_VAR name="date"></h3>
-		<p id="article_body"><TMPL_VAR name="body"></p>
+		<div id="article_body"><TMPL_VAR name="body"></div>
 	</div>
 </TMPL_IF>
 
@@ -58,7 +59,7 @@
 
 </div>
 
-<pre><TMPL_VAR name="dump"></pre>
+<pre id="dump"><TMPL_VAR name="dump"></pre>
 
 </body>
 </html>
