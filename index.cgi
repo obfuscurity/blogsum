@@ -115,7 +115,7 @@ sub get_articles {
 			$criteria .= "\%' AND enabled=1 ";
 		}
 	} elsif ($cgi->param('search')) {
-		$criteria .= "WHERE tags LIKE ? AND enabled=1 ";
+		$criteria .= "WHERE tags LIKE ? OR author LIKE ? AND enabled=1 ";
 	} elsif ($cgi->param('id')) {
 		$criteria .= 'WHERE id=? AND enabled=1 ';
 		$show_comments=1;
@@ -129,7 +129,7 @@ sub get_articles {
 	if ($j == 3) {
 		$sth->execute($cgi->param('uri')) || die $dbh->errstr;
 	} elsif ($cgi->param('search')) {
-		$sth->execute(sprintf("%%%s%%", $cgi->param('search'))) || die $dbh->errstr;
+		$sth->execute(sprintf("%%%s%%", $cgi->param('search')), sprintf("%%%s%%", $cgi->param('search'))) || die $dbh->errstr;
 	} elsif ($cgi->param('id')) {
 		$sth->execute($cgi->param('id')) || die $dbh->errstr;
 	} else {
@@ -140,6 +140,12 @@ sub get_articles {
 	while (my $result = $sth->fetchrow_hashref) {
 		$result->{'date'} =~ /(\d{4})\-(\d{2})\-\d{2} \d{2}\:\d{2}\:\d{2}/;
 		($result->{'year'}, $result->{'month'}) = ($1, $2);
+		# cut off readmore if we're on the front page
+		if (($result->{'body'} =~ /<!--readmore-->/) && ($j < 3)) {
+			$result->{'body'} =~ /(.*)\<\!\-\-readmore\-\-\>/s;
+			$result->{'body'} = $1;
+			$result->{'readmore'}++;
+		}
 		$result->{'tag_loop'} = format_tags($result->{'tags'}) if ($result->{'tags'});
 		my $comments = get_comments(article_id => $result->{'id'}, enabled => 1);
 		$result->{'comments_count'} = scalar(@{$comments});

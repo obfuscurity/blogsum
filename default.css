@@ -6,6 +6,7 @@ h2 { font-size: 1.3em; }
 h3 { font-size: 0.9em; }
 p { font-size: 0.8em; }
 pre { font-size: 0.7em; background-color: #ccc; padding: 15 25 15 25; }
+pre, tt { font-family: Courier; }
 pre#dump { background-color: #fff; }
 
 div#wrapper { margin-left: 15%; margin-right: 10%; border: 0px solid black; }
@@ -33,6 +34,8 @@ a#delete { text-decoration: none; color: #f00; }
 .article_title a { text-decoration: none; }
 h2.article_title, .article_title a, a#mod_story { color: #a14732; }
 h3#article_date { margin: 0; }
+span.author { font-size: 0.9em; color: #999; }
+span.author a { text-decoration: none; font-weight: normal; color: #09c; border-bottom: 1px dashed; }
 span#mod_story_disabled { color: #999; }
 div.article_body { border: 0px solid black; }
 .article_body a { color: #a14732; text-decoration: none; border-bottom: 1px dashed; }

@@ -16,9 +16,10 @@
 <div id="main">
 <TMPL_LOOP name="articles">
 	<h2 class="article_title"><a href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">"><TMPL_VAR name="title"></a></h2>
-	<h3 id="article_date"><TMPL_VAR name="date"></h3>
+	<h3 id="article_date"><TMPL_VAR name="date"> <span class="author">by <a href="/Tags/<TMPL_VAR name="author">"><TMPL_VAR name="author"></a></span></h3>
 	<div class="article_body">
 		<TMPL_VAR name="body">
+		<TMPL_IF name="readmore"><p><a href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">">Read the rest of this story...</a></p></TMPL_IF>
 	</div>
 
 	<ul class="article_footer">
