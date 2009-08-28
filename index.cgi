@@ -129,7 +129,8 @@ sub get_articles {
 	if ($j == 3) {
 		$sth->execute($cgi->param('uri')) || die $dbh->errstr;
 	} elsif ($cgi->param('search')) {
-		$sth->execute(sprintf("%%%s%%", $cgi->param('search')), sprintf("%%%s%%", $cgi->param('search'))) || die $dbh->errstr;
+		my $search_tag = sprintf("%%%s%%", $cgi->param('search'));
+		$sth->execute($search_tag, $search_tag) || die $dbh->errstr;
 	} elsif ($cgi->param('id')) {
 		$sth->execute($cgi->param('id')) || die $dbh->errstr;
 	} else {
