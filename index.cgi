@@ -116,7 +116,7 @@ sub get_articles {
 			$criteria .= "\%' AND enabled=1 ";
 		}
 	} elsif ($cgi->param('search')) {
-		$criteria .= "WHERE tags LIKE ? OR author LIKE ? AND enabled=1 ";
+		$criteria .= "WHERE (tags LIKE ? OR author LIKE ?) AND enabled=1 ";
 	} elsif ($cgi->param('id')) {
 		$criteria .= 'WHERE id=? AND enabled=1 ';
 		$show_comments=1;
