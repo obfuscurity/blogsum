@@ -18,6 +18,7 @@ my $feed_updates = 'hourly';
 my $captcha_pubkey = '';
 my $captcha_seckey = '';
 my $comment_max_length = '1000';
+my $comments_allowed = 0;
 
 
 ###########################
@@ -29,7 +30,7 @@ my $template = HTML::Template->new(filename => $tmplfile, die_on_bad_params => 0
 if ($cgi->param('rss1')) {
 	output_rss();
 } else {
-	read_comment();
+	read_comment() if $comments_allowed;
 	my $articles = get_articles();
 	my $archives = get_archives();
 	$template->param( archives => $archives );
@@ -38,7 +39,7 @@ if ($cgi->param('rss1')) {
 	$template->param( copyright => $blog_rights );
 	if (@{$articles}) {
 		$template->param( articles => $articles );
-	 	if ($cgi->param('uri')) {
+	 	if ($cgi->param('uri') && $comments_allowed) {
 			$template->param( comment_form => 1 );
 			$template->param( comment_max_length => $comment_max_length );
 			$template->param( id => $articles->[0]->{'id'} );
