@@ -19,6 +19,8 @@ my $captcha_pubkey = '';
 my $captcha_seckey = '';
 my $comment_max_length = '1000';
 my $comments_allowed = 0;
+my $smtp_server = 'localhost:25';
+my $smtp_sender = 'blogsum@example.com';
 
 
 ###########################
@@ -239,9 +241,12 @@ sub read_comment {
 	);
 
 	if ($cgi->param('recaptcha_response_field') && $cgi->param('comment') && $cgi->param('id')) {
+
 		# test our captcha
 		my $result = $captcha->check_answer( $captcha_seckey, $ENV{'REMOTE_ADDR'}, $cgi->param('recaptcha_challenge_field'), $cgi->param('recaptcha_response_field') );
+
 		if ($result->{'is_valid'}) {
+
 			# save comment
 			my $comment = $cgi->param('comment');
 			$comment = HTML::Entities::encode($text);
@@ -249,6 +254,22 @@ sub read_comment {
 			my $sth = $dbh->prepare($stmt);
 			$sth->execute($cgi->param('id'), $cgi->param('name') || 'anonymous', $cgi->param('email') || undef, $cgi->param('url') || undef, substr(HTML::Entities::encode($cgi->param('comment')), 0, $comment_max_length)) || die $dbh->errstr;
 			$template->param( message => 'comment awaiting moderation, thank you' );
+
+			# send email notification
+			my $smtp = Net::SMTP->new($smtp_server);
+			$smtp->mail($ENV{USER});
+			$smtp->to("$blog_owner\n");
+			$smtp->data();
+			$smtp->datasend("From: $smtp_sender\n"); 
+			$smtp->datasend("To: $blog_owner\n");
+			$smtp->datasend("Subject: $blog_title comment submission\n\n");
+			$smtp->datasend("You have received a new comment submission.\n\n"); 
+			$smtp->datasend(sprintf("From: %s\n", $cgi->param('name') || 'anonymous'));
+			$smtp->datasend(sprintf("Date: %s\n", scalar(localtime)));
+			$smtp->datasend(sprintf("Comment:\n\"%s\"\n\n", substr(HTML::Entities::encode($cgi->param('comment')), 0, $comment_max_length)));
+			$smtp->datasend("Moderate comments at ${blog_url}admin.cgi?view=moderate\n");
+			$smtp->dataend(); 
+			$smtp->quit;
 		} else {
 			$template->param( error => $friendly_errors{ $result->{'error'} } );
 			$template->param( name => $cgi->param('name') );
