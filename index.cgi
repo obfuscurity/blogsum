@@ -26,6 +26,7 @@ my $smtp_sender = 'blogsum@example.com';
 ###########################
 # main execution          #
 ###########################
+use strict;
 my $cgi = CGI->new;
 my $dbh = DBI->connect("DBI:SQLite:dbname=$database", '', '', { RaiseError => 1 }) || die $DBI::errstr;
 my $template = HTML::Template->new(filename => $tmplfile, die_on_bad_params => 0);
@@ -68,9 +69,9 @@ sub output_rss {
 		description => $blog_subtitle,
 		dc => {
 			subject => $blog_title,
-			creator => $feed_owner,
-			publisher => $feed_owner,
-			rights => $feed_rights,
+			creator => $blog_owner,
+			publisher => $blog_owner,
+			rights => $blog_rights,
 			language => 'en-us',
 		},
 		syn => {
@@ -248,8 +249,7 @@ sub read_comment {
 		if ($result->{'is_valid'}) {
 
 			# save comment
-			my $comment = $cgi->param('comment');
-			$comment = HTML::Entities::encode($text);
+			my $comment = HTML::Entities::encode($cgi->param('comment'));
 			my $stmt = "INSERT INTO comments VALUES (NULL, ?, datetime('now'), ?, ?, ?, ?, 0)";
 			my $sth = $dbh->prepare($stmt);
 			$sth->execute($cgi->param('id'), $cgi->param('name') || 'anonymous', $cgi->param('email') || undef, $cgi->param('url') || undef, substr(HTML::Entities::encode($cgi->param('comment')), 0, $comment_max_length)) || die $dbh->errstr;

@@ -14,6 +14,7 @@ my $blog_title = 'My New Blog';
 ###########################
 # main execution          #
 ###########################
+use strict;
 my $cgi = CGI->new;
 my $dbh = DBI->connect("DBI:SQLite:dbname=$database", '', '', { RaiseError => 1 }) || die $DBI::errstr;
 my $template = HTML::Template->new(filename => $tmplfile, die_on_bad_params => 0);
