@@ -4,20 +4,20 @@
 # All rights reserved.
 
 ###########################
-# user options            #
+# pragmas and vars        #
 ###########################
-my $database = 'data/site.db';
-my $tmplfile = 'templates/admin.html';
-my $blog_title = 'My New Blog';
+use strict;
+my $database = $Blogsum::Config::database;
+my $tmplfile_admin = $Blogsum::Config::tmplfile_admin;
+my $blog_title = $Blogsum::Config::blog_title;
 
 
 ###########################
 # main execution          #
 ###########################
-use strict;
 my $cgi = CGI->new;
 my $dbh = DBI->connect("DBI:SQLite:dbname=$database", '', '', { RaiseError => 1 }) || die $DBI::errstr;
-my $template = HTML::Template->new(filename => $tmplfile, die_on_bad_params => 0);
+my $template = HTML::Template->new(filename => $tmplfile_admin, die_on_bad_params => 0);
 my $view;
 
 if ($cgi->param('view')) {

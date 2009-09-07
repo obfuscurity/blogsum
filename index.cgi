@@ -5,22 +5,24 @@
 
 
 ###########################
-# user options            #
+# pragmas and vars        #
 ###########################
-my $database = 'data/site.db';
-my $tmplfile = 'templates/index.html';
-my $blog_title = 'example.com';
-my $blog_subtitle = 'My New Blog';
-my $blog_url = 'http://www.example.com/';
-my $blog_owner = 'user@example.com';
-my $blog_rights = 'Copyright 2009, Example User';
-my $feed_updates = 'hourly';
-my $captcha_pubkey = '';
-my $captcha_seckey = '';
-my $comment_max_length = '1000';
-my $comments_allowed = 0;
-my $smtp_server = 'localhost:25';
-my $smtp_sender = 'blogsum@example.com';
+use strict;
+use Blogsum::Config;
+my $database = $Blogsum::Config::database;
+my $tmplfile_index = $Blogsum::Config::tmplfile_index;
+my $blog_title = $Blogsum::Config::blog_title;
+my $blog_subtitle = $Blogsum::Config::blog_subtitle;
+my $blog_url = $Blogsum::Config::blog_url;
+my $blog_owner = $Blogsum::Config::blog_owner;
+my $blog_rights = $Blogsum::Config::blog_rights;
+my $feed_updates = $Blogsum::Config::feed_updates;
+my $captcha_pubkey = $Blogsum::Config::captcha_pubkey;
+my $captcha_seckey = $Blogsum::Config::captcha_seckey;
+my $comment_max_length = $Blogsum::Config::comment_max_length;
+my $comments_allowed = $Blogsum::Config::comments_allowed;
+my $smtp_server = $Blogsum::Config::smtp_server;
+my $smtp_sender = $Blogsum::Config::smtp_sender;
 
 
 ###########################
@@ -29,7 +31,7 @@ my $smtp_sender = 'blogsum@example.com';
 use strict;
 my $cgi = CGI->new;
 my $dbh = DBI->connect("DBI:SQLite:dbname=$database", '', '', { RaiseError => 1 }) || die $DBI::errstr;
-my $template = HTML::Template->new(filename => $tmplfile, die_on_bad_params => 0);
+my $template = HTML::Template->new(filename => $tmplfile_index, die_on_bad_params => 0);
 if ($cgi->param('rss1')) {
 	output_rss();
 } else {
