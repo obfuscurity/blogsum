@@ -7,6 +7,7 @@
 # pragmas and vars        #
 ###########################
 use strict;
+use Blogsum::Config;
 my $database = $Blogsum::Config::database;
 my $tmplfile_admin = $Blogsum::Config::tmplfile_admin;
 my $blog_title = $Blogsum::Config::blog_title;
