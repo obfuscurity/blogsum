@@ -254,7 +254,11 @@ sub read_comment {
 			my $comment = HTML::Entities::encode($cgi->param('comment'));
 			my $stmt = "INSERT INTO comments VALUES (NULL, ?, datetime('now'), ?, ?, ?, ?, 0)";
 			my $sth = $dbh->prepare($stmt);
-			$sth->execute($cgi->param('id'), $cgi->param('name') || 'anonymous', $cgi->param('email') || undef, $cgi->param('url') || undef, substr(HTML::Entities::encode($cgi->param('comment')), 0, $comment_max_length)) || die $dbh->errstr;
+			my $comment_name = $cgi->param('name') ? substr($cgi->param('name'), 0, 100) : 'anonymous';
+			my $comment_email = $cgi->param('email') ? substr($cgi->param('email'), 0, 100) : undef;
+			my $comment_url = $cgi->param('url') ? substr($cgi->param('url'), 0, 100) : undef;
+			my $comment_body = substr(HTML::Entities::encode($cgi->param('comment')), 0, $comment_max_length);
+			$sth->execute($cgi->param('id'), $comment_name, $comment_email, $comment_url, $comment_body) || die $dbh->errstr;
 			$template->param( message => 'comment awaiting moderation, thank you' );
 
 			# send email notification
@@ -266,9 +270,9 @@ sub read_comment {
 			$smtp->datasend("To: $blog_owner\n");
 			$smtp->datasend("Subject: $blog_title comment submission\n\n");
 			$smtp->datasend("You have received a new comment submission.\n\n"); 
-			$smtp->datasend(sprintf("From: %s\n", $cgi->param('name') || 'anonymous'));
+			$smtp->datasend(sprintf("From: %s\n", $comment_name));
 			$smtp->datasend(sprintf("Date: %s\n", scalar(localtime)));
-			$smtp->datasend(sprintf("Comment:\n\"%s\"\n\n", substr(HTML::Entities::encode($cgi->param('comment')), 0, $comment_max_length)));
+			$smtp->datasend(sprintf("Comment:\n\"%s\"\n\n", $comment_body));
 			$smtp->datasend("Moderate comments at ${blog_url}admin.cgi?view=moderate\n");
 			$smtp->dataend(); 
 			$smtp->quit;

@@ -47,9 +47,9 @@
 	<div id="comment_form">
 	<p>Add a comment:</p>
 	<form id="comment_form" action="/index.cgi" method="post">
-		<p><input name="name" size="40" value="<TMPL_VAR name="name">"> &nbsp; name</p>
-		<p><input name="email" size="40" value="<TMPL_VAR name="email">"> &nbsp; email</p>
-		<p><input name="url" size="40" value="<TMPL_VAR name="url">"> &nbsp; url</p>
+		<p><input name="name" size="40" maxlength="100" value="<TMPL_VAR name="name">"> &nbsp; name</p>
+		<p><input name="email" size="40" maxlength="100" value="<TMPL_VAR name="email">"> &nbsp; email</p>
+		<p><input name="url" size="40" maxlength="100" value="<TMPL_VAR name="url">"> &nbsp; url</p>
 		<p>max length <TMPL_VAR name="comment_max_length"> chars<br><textarea rows="3" cols="30" name="comment"><TMPL_VAR name="comment"></textarea></p>
 		<TMPL_VAR name="captcha">
 		<p><input type="submit" name="submit" value="submit comment"></p>
