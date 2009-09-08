@@ -11,6 +11,7 @@ use Blogsum::Config;
 my $database = $Blogsum::Config::database;
 my $tmplfile_admin = $Blogsum::Config::tmplfile_admin;
 my $blog_title = $Blogsum::Config::blog_title;
+my $timezone_offset = $Blogsum::Config::timezone_offset;
 
 
 ###########################
@@ -138,9 +139,9 @@ sub edit_article {
 			my $uri = $cgi->param('uri') || $cgi->param('title');
 			$uri =~ s/\ /\-/g;
 			my $author = $ENV{'REMOTE_USER'} || 'author';
-			my $stmt = "INSERT INTO articles VALUES (NULL, datetime('now'), ?, ?, ?, ?, 0, ?)";
+			my $stmt = "INSERT INTO articles VALUES (NULL, datetime('now', ?), ?, ?, ?, ?, 0, ?)";
 			my $sth = $dbh->prepare($stmt);
-			$sth->execute($cgi->param('title'), $uri, $cgi->param('body'), $cgi->param('tags'), $author) || die $dbh->errstr;
+			$sth->execute(sprintf("%s hours", $timezone_offset), $cgi->param('title'), $uri, $cgi->param('body'), $cgi->param('tags'), $author) || die $dbh->errstr;
 			manage_articles();
 		# if missing data, push back to preview
 		} else {

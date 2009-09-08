@@ -23,6 +23,7 @@ my $comment_max_length = $Blogsum::Config::comment_max_length;
 my $comments_allowed = $Blogsum::Config::comments_allowed;
 my $smtp_server = $Blogsum::Config::smtp_server;
 my $smtp_sender = $Blogsum::Config::smtp_sender;
+my $timezone_offset = $Blogsum::Config::timezone_offset;
 
 
 ###########################
@@ -252,13 +253,13 @@ sub read_comment {
 
 			# save comment
 			my $comment = HTML::Entities::encode($cgi->param('comment'));
-			my $stmt = "INSERT INTO comments VALUES (NULL, ?, datetime('now'), ?, ?, ?, ?, 0)";
+			my $stmt = "INSERT INTO comments VALUES (NULL, ?, datetime('now', ?), ?, ?, ?, ?, 0)";
 			my $sth = $dbh->prepare($stmt);
 			my $comment_name = $cgi->param('name') ? substr($cgi->param('name'), 0, 100) : 'anonymous';
 			my $comment_email = $cgi->param('email') ? substr($cgi->param('email'), 0, 100) : undef;
 			my $comment_url = $cgi->param('url') ? substr($cgi->param('url'), 0, 100) : undef;
 			my $comment_body = substr(HTML::Entities::encode($cgi->param('comment')), 0, $comment_max_length);
-			$sth->execute($cgi->param('id'), $comment_name, $comment_email, $comment_url, $comment_body) || die $dbh->errstr;
+			$sth->execute($cgi->param('id'), sprintf("%s hours", $timezone_offset), $comment_name, $comment_email, $comment_url, $comment_body) || die $dbh->errstr;
 			$template->param( message => 'comment awaiting moderation, thank you' );
 
 			# send email notification
