@@ -15,7 +15,7 @@ my $database = $ARGV[1];
 my $xs = XML::Simple->new();
 my $ref = $xs->XMLin($wpxml);
 my $dbh = DBI->connect("DBI:SQLite:dbname=$database",'','', { RaiseError => 1 }) || die $DBI::errstr;
-my $stmt = "INSERT INTO articles VALUES (NULL, ?, ?, ?, ?, ?, 1, ?)";
+my $stmt = "INSERT INTO articles VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)";
 my $sth = $dbh->prepare($stmt);
 my $stmt2 = "INSERT INTO comments VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)";
 my $sth2 = $dbh->prepare($stmt2);
@@ -26,6 +26,7 @@ foreach my $item ( @{$ref->{'channel'}->{'item'}} ) {
 	my $date = $item->{'wp:post_date'};
 	my $uri = $item->{'wp:post_name'};
 	my $author = $item->{'dc:creator'};
+	my $enabled = ($item->{'wp:status'} eq 'publish') ? 1 : 0;
 	my $content = $item->{'content:encoded'};
 	$content =~ s///g;					# remove 
 	unless (($content =~ /<pre>/) || ($content =~ <ul>) || ($content =~ <ol>)) {
@@ -55,7 +56,7 @@ foreach my $item ( @{$ref->{'channel'}->{'item'}} ) {
 			}
 		}
 	}
-	$sth->execute($date, $title, $uri, $content, join(',', @tags), $author) || die $dbh->errstr;
+	$sth->execute($date, $title, $uri, $content, join(',', @tags), $enabled, $author) || die $dbh->errstr;
 	my $article_id = $dbh->func('last_insert_rowid');
 	if ($item->{'wp:comment'}) {
 		if (ref($item->{'wp:comment'}) eq 'ARRAY') {
