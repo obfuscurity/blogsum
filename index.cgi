@@ -26,6 +26,7 @@ my $smtp_sender = $Blogsum::Config::smtp_sender;
 my $timezone_offset = $Blogsum::Config::timezone_offset;
 my $articles_per_page = $Blogsum::Config::articles_per_page;
 my $google_analytics_id = $Blogsum::Config::google_analytics_id;
+my $google_webmaster_id = $Blogsum::Config::google_webmaster_id;
 
 
 ###########################
@@ -46,6 +47,7 @@ if ($cgi->param('rss1')) {
 	$template->param( subtitle => $blog_subtitle );
 	$template->param( copyright => $blog_rights );
 	$template->param( google_analytics_id => $google_analytics_id );
+	$template->param( google_webmaster_id => $google_webmaster_id );
 	if (@{$articles}) {
 		$template->param( articles => $articles );
 	 	if ($cgi->param('uri') && $comments_allowed) {

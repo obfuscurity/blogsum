@@ -32,6 +32,7 @@ our $smtp_sender = 'blogsum@example.com';
 our $timezone_offset = '+0';
 our $articles_per_page = '10';
 our $google_analytics_id = '';
+our $google_webmaster_id = '';
 
 1;
 
