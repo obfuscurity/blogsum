@@ -114,9 +114,10 @@ sub get_articles {
 	$articles_per_page = ($articles_per_page > 0) ? $articles_per_page : -1;
 	if ($cgi->param('page') && POSIX::isdigit($cgi->param('page'))) {
 		$page = $cgi->param('page');
- 		$offset = $page * $articles_per_page;
+ 		$offset = ($page - 1) * $articles_per_page;
 	} else {
-		$page = $offset = 0;
+		$page = 1;
+		$offset = 0;
 	}
 	$limit_clause = " LIMIT $articles_per_page OFFSET $offset";
 
@@ -185,7 +186,7 @@ sub get_articles {
 	$sth2->execute || die $dbh->errstr;
 	my $article_count = $sth2->fetchrow_hashref->{'total'};
 	$template->param( page_next => ($page + 1) ) if ($article_count > ($offset + $articles_per_page));
-	$template->param( page_last => ($page - 1) ) if (($page > 0) && ($article_count > $offset));
+	$template->param( page_last => ($page - 1) ) if (($page > 1) && ($article_count > $offset));
 
 	return (\@articles);
 }
