@@ -24,6 +24,7 @@ my $comments_allowed = $Blogsum::Config::comments_allowed;
 my $smtp_server = $Blogsum::Config::smtp_server;
 my $smtp_sender = $Blogsum::Config::smtp_sender;
 my $timezone_offset = $Blogsum::Config::timezone_offset;
+my $articles_per_page = $Blogsum::Config::articles_per_page;
 
 
 ###########################
@@ -103,39 +104,55 @@ sub output_rss {
 
 sub get_articles {
 
-	my $criteria;
-	my $j=0;
-	my $show_comments=0;
+	my $page;
+	my $offset;
+	my $limit_clause;
+	my $where_clause;
+	my $j = 0;
+	my $show_comments = 0;
+
+	$articles_per_page = ($articles_per_page > 0) ? $articles_per_page : -1;
+	if ($cgi->param('page') && POSIX::isdigit($cgi->param('page'))) {
+		$page = $cgi->param('page');
+ 		$offset = $page * $articles_per_page;
+	} else {
+		$page = $offset = 0;
+	}
+	$limit_clause = " LIMIT $articles_per_page OFFSET $offset";
 
 	if (($cgi->param('year') =~ /\d{4}/)&& (1900 < $cgi->param('year')) && ($cgi->param('year') < 2036)) {
-		$criteria .= 'WHERE date LIKE \'%' . $cgi->param('year');
+		$where_clause .= 'WHERE date LIKE \'%' . $cgi->param('year');
 		$j++;
 		if (($cgi->param('month') =~ /\d{2}/) && (0 < $cgi->param('month')) && ($cgi->param('month') < 12)) {
-			$criteria .= '-' . $cgi->param('month') . '%\' AND enabled=1 ';
+			$where_clause .= '-' . $cgi->param('month') . '%\' AND enabled=1 ';
 			$j++;
 			if ($cgi->param('uri') =~ /\w+/) {
-				$criteria .= 'AND uri=? AND enabled=1 ';
+				$where_clause .= 'AND uri=? AND enabled=1 ';
+				$limit_clause = '';
 				$j++;
 				$show_comments=1;
 			}
 		} else {
-			$criteria .= "\%' AND enabled=1 ";
+			$where_clause .= "\%' AND enabled=1 ";
 		}
 	} elsif ($cgi->param('search')) {
-		$criteria .= "WHERE (tags LIKE ? OR author LIKE ?) AND enabled=1 ";
+		$where_clause .= "WHERE (tags LIKE ? OR author LIKE ?) AND enabled=1 ";
+
 	} elsif ($cgi->param('id')) {
-		$criteria .= 'WHERE id=? AND enabled=1 ';
+		$where_clause .= 'WHERE id=? AND enabled=1 ';
+		$limit_clause = '';
 		$show_comments=1;
+
 	} else {
-		$criteria .= 'WHERE enabled=1 ';
+		$where_clause .= 'WHERE enabled=1 ';
 	}
 
-	my $query = 'SELECT * FROM articles ' . $criteria . 'ORDER BY date DESC';
+	my $query = 'SELECT * FROM articles ' . $where_clause . 'ORDER BY date DESC' . $limit_clause;
 	my $sth = $dbh->prepare($query);
 	
 	if ($j == 3) {
 		$sth->execute($cgi->param('uri')) || die $dbh->errstr;
-	} elsif ($cgi->param('search')) {
+} elsif ($cgi->param('search')) {
 		my $search_tag = sprintf("%%%s%%", $cgi->param('search'));
 		$sth->execute($search_tag, $search_tag) || die $dbh->errstr;
 	} elsif ($cgi->param('id')) {
@@ -162,6 +179,14 @@ sub get_articles {
 		}
 		push(@articles, $result);
 	}
+
+	my $query2 = 'SELECT count(*) as total FROM articles WHERE enabled=1';
+	my $sth2 = $dbh->prepare($query2);
+	$sth2->execute || die $dbh->errstr;
+	my $article_count = $sth2->fetchrow_hashref->{'total'};
+	$template->param( page_next => ($page + 1) ) if ($article_count > ($offset + $articles_per_page));
+	$template->param( page_last => ($page - 1) ) if (($page > 0) && ($article_count > $offset));
+
 	return (\@articles);
 }
 

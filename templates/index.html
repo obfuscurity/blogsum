@@ -80,6 +80,9 @@
 </div>
 
 <div class="footer">
+	<TMPL_IF name="page_last"><a href="/Page/<TMPL_VAR name="page_last">">previous</a></TMPL_IF>
+	<TMPL_IF name="page_next"><a href="/Page/<TMPL_VAR name="page_next">">next</a></TMPL_IF>
+	<hr>
 	<p>&copy; <TMPL_VAR name="copyright"></p>
 </div>
 </div>

@@ -30,6 +30,7 @@ our $comments_allowed = 0;
 our $smtp_server = 'localhost:25';
 our $smtp_sender = 'blogsum@example.com';
 our $timezone_offset = '+0';
+our $articles_per_page = '10';
 
 1;
 
