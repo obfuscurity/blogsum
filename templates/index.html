@@ -1,11 +1,13 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <title><TMPL_VAR name="title"></title>
 <link rel="stylesheet" type="text/css" href="/default.css" title="Default">
-<link rel="alternate" type="application/rss+xml" href="/rss.xml" title="RSS 1.0" />
-<link rel="alternate" type="application/rss+xml" href="/rss2.xml" title="RSS 2.0" />
+<link rel="alternate" type="application/rss+xml" href="/rss.xml" title="RSS 1.0">
+<link rel="alternate" type="application/rss+xml" href="/rss2.xml" title="RSS 2.0">
 <TMPL_VAR name="captcha_options">
-<TMPL_IF name="google_webmaster_id"><meta name="verify-v1" content="<TMPL_VAR name="google_webmaster_id">" /></TMPL_IF>
+<TMPL_IF name="google_webmaster_id"><meta name="verify-v1" content="<TMPL_VAR name="google_webmaster_id">"></TMPL_IF>
 </head>
 <body>
 
@@ -34,7 +36,7 @@
 	</div>
 
 	<ul class="article_footer">
-	<li class="comments_count"><span class="comments_count">Comments <a class"comments_count" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">#comments">(<TMPL_VAR name="comments_count">)</a></span></li>
+	<li class="comments_count"><span class="comments_count">Comments <a class="comments_count" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">#comments">(<TMPL_VAR name="comments_count">)</a></span></li>
 
 	<TMPL_IF name="tag_loop">
 	<li class="tags"><span class="tags">Tags: <TMPL_LOOP name="tag_loop"> &nbsp;<a class="tags" href="/Tags/<TMPL_VAR name="tag">"><TMPL_VAR name="tag"></a></TMPL_LOOP></span></li>
