@@ -23,7 +23,6 @@ my $comment_max_length = $Blogsum::Config::comment_max_length;
 my $comments_allowed = $Blogsum::Config::comments_allowed;
 my $smtp_server = $Blogsum::Config::smtp_server;
 my $smtp_sender = $Blogsum::Config::smtp_sender;
-my $timezone_offset = $Blogsum::Config::timezone_offset;
 my $articles_per_page = $Blogsum::Config::articles_per_page;
 my $google_analytics_id = $Blogsum::Config::google_analytics_id;
 my $google_webmaster_id = $Blogsum::Config::google_webmaster_id;
@@ -71,6 +70,7 @@ sub output_rss {
 
 	my $version = ($cgi->param('rss') == 2) ? '2.0' : '1.0';
 	my $rss = XML::RSS->new( version => $version );
+
 	$rss->channel (
 		title => $blog_title,
 		link => $blog_url,
@@ -88,6 +88,7 @@ sub output_rss {
 			updateBase => '1901-01-01T00:00+00:00',
 		}
 	);
+
 	my $articles = get_articles();
 	for my $item (@{$articles}) {
 		$item->{'date'} =~ /(\d{4})\-(\d{2})\-\d{2} \d{2}\:\d{2}\:\d{2}/;
@@ -100,9 +101,8 @@ sub output_rss {
 				link => $link,
 				description => $item->{'body'},
 				author => $item->{'author'},
-				category => split(/,/, $item->{'tags'}),
 				comments => $link . '#comments',
-				pubDate => $item->{'date'},
+				pubDate => POSIX::strftime("%a, %d %b %Y %H:%M:%S %Z", gmtime($item->{'epoch'})),
 			);
 		} else {
 			$rss->add_item (
@@ -112,7 +112,7 @@ sub output_rss {
 				dc => {
 					subject => $blog_title,
 					creator => $item->{'author'},
-					date => $item->{'date'},
+					date => POSIX::strftime("%a, %d %b %Y %H:%M:%S %Z", gmtime($item->{'epoch'})),
 				},
 			);
 		}
@@ -166,7 +166,7 @@ sub get_articles {
 		$where_clause .= 'WHERE enabled=1 ';
 	}
 
-	my $query = 'SELECT * FROM articles ' . $where_clause . 'ORDER BY date DESC' . $limit_clause;
+	my $query = 'SELECT *, strftime("%s", date) AS epoch FROM articles ' . $where_clause . 'ORDER BY date DESC' . $limit_clause;
 	my $sth = $dbh->prepare($query);
 	
 	if ($j == 3) {
@@ -297,13 +297,13 @@ sub read_comment {
 
 			# save comment
 			my $comment = HTML::Entities::encode($cgi->param('comment'));
-			my $stmt = "INSERT INTO comments VALUES (NULL, ?, datetime('now', ?), ?, ?, ?, ?, 0)";
+			my $stmt = "INSERT INTO comments VALUES (NULL, ?, datetime('now'), ?, ?, ?, ?, 0)";
 			my $sth = $dbh->prepare($stmt);
 			my $comment_name = $cgi->param('name') ? substr($cgi->param('name'), 0, 100) : 'anonymous';
 			my $comment_email = $cgi->param('email') ? substr($cgi->param('email'), 0, 100) : undef;
 			my $comment_url = $cgi->param('url') ? substr($cgi->param('url'), 0, 100) : undef;
 			my $comment_body = substr(HTML::Entities::encode($cgi->param('comment')), 0, $comment_max_length);
-			$sth->execute($cgi->param('id'), sprintf("%s hours", $timezone_offset), $comment_name, $comment_email, $comment_url, $comment_body) || die $dbh->errstr;
+			$sth->execute($cgi->param('id'), $comment_name, $comment_email, $comment_url, $comment_body) || die $dbh->errstr;
 			$template->param( message => 'comment awaiting moderation, thank you' );
 
 			# send email notification
