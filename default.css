@@ -5,7 +5,7 @@ h1 { font-size: 1.8em; }
 h2 { font-size: 1.3em; }
 h3 { font-size: 0.9em; }
 p { font-size: 0.8em; }
-pre { font-size: 0.7em; background-color: #ccc; padding: 15 25 15 25; }
+pre { font-size: 0.7em; background-color: #ccc; padding: 15px 25px 15px 25px; }
 pre, tt { font-family: Courier; }
 pre#dump { background-color: #fff; }
 
