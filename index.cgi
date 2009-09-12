@@ -36,7 +36,7 @@ use strict;
 my $cgi = CGI->new;
 my $dbh = DBI->connect("DBI:SQLite:dbname=$database", '', '', { RaiseError => 1 }) || die $DBI::errstr;
 my $template = HTML::Template->new(filename => $tmplfile_index, die_on_bad_params => 0);
-if ($cgi->param('rss1')) {
+if ($cgi->param('rss')) {
 	output_rss();
 } else {
 	read_comment() if $comments_allowed;
@@ -69,8 +69,8 @@ $dbh->disconnect;
 
 sub output_rss {
 
-	my $rss = XML::RSS->new( version => '1.0' );
-
+	my $version = ($cgi->param('rss') == 2) ? '2.0' : '1.0';
+	my $rss = XML::RSS->new( version => $version );
 	$rss->channel (
 		title => $blog_title,
 		link => $blog_url,
@@ -92,16 +92,30 @@ sub output_rss {
 	for my $item (@{$articles}) {
 		$item->{'date'} =~ /(\d{4})\-(\d{2})\-\d{2} \d{2}\:\d{2}\:\d{2}/;
 		($item->{'year'}, $item->{'month'}) = ($1, $2);
-		$rss->add_item (
-			title => $item->{'title'},
-			link => sprintf("%s%s/%s/%s", $blog_url, $item->{'year'}, $item->{'month'}, $item->{'uri'}),
-			description => $item->{'body'},
-			dc => {
-				subject => $blog_title,
-				creator => $item->{'author'},
-				date => $item->{'date'},
-			},
-		);
+		my $link = sprintf("%s%s/%s/%s", $blog_url, $item->{'year'}, $item->{'month'}, $item->{'uri'});
+
+		if ($version eq '2.0') {
+			$rss->add_item (
+				title => $item->{'title'},
+				link => $link,
+				description => $item->{'body'},
+				author => $item->{'author'},
+				category => split(/,/, $item->{'tags'}),
+				comments => $link . '#comments',
+				pubDate => $item->{'date'},
+			);
+		} else {
+			$rss->add_item (
+				title => $item->{'title'},
+				link => $link,
+				description => $item->{'body'},
+				dc => {
+					subject => $blog_title,
+					creator => $item->{'author'},
+					date => $item->{'date'},
+				},
+			);
+		}
 	}
 	print $cgi->header('application/rss+xml'), $rss->as_string;
 }
