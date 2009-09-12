@@ -22,9 +22,9 @@ span#subtitle { font-size: 0.5em; color: #ccc; }
 a#view { text-decoration: none; color: #777; }
 a#mod_story, span#mod_story_disabled { font-size: 1.3em; font-weight: bold; }
 #mod_user, #mod_date { font-size: 1.1em; font-weight: bold; }
-#date { font-size: 1.0em; font-weight: bold; }
-h4#comments { padding-top: 30px; }
-#comment_body { padding: 0 0 18px 10px; }
+.date { font-size: 1.0em; font-weight: bold; }
+h4.comments { padding-top: 30px; }
+.comment_body { padding: 0 0 18px 10px; }
 
 a#publish { text-decoration: none; color: #3c0; }
 a#edit { text-decoration: none; color: #03f; }
@@ -33,7 +33,7 @@ a#delete { text-decoration: none; color: #f00; }
 
 .article_title a { text-decoration: none; }
 h2.article_title, .article_title a, a#mod_story { color: #a14732; }
-h3#article_date { margin: 0; }
+h3.article_date { margin: 0; }
 span.author { font-size: 0.9em; color: #999; }
 span.author a { text-decoration: none; font-weight: normal; color: #09c; border-bottom: 1px dashed; }
 span#mod_story_disabled { color: #999; }
@@ -41,21 +41,21 @@ div.article_body { border: 0px solid black; }
 .article_body a { color: #a14732; text-decoration: none; border-bottom: 1px dashed; }
 
 ul.article_footer { width: 100%; border: 0px solid blue; margin-bottom: 30px; }
-.article_footer li#comments_count { width: 20%; display: block; float: left; clear: left; border: 0px solid red; }
-.article_footer li#tags { width: 80%; display: block; float: right; clear: right; text-align: right; border: 0px solid red; }
-span#comments_count, span#tags { font-size: 0.7em; }
-a#comments_count, a#tags { color: #09c; }
-a#tags { text-decoration: none; border-bottom: 1px dashed; }
+.article_footer li.comments_count { width: 20%; display: block; float: left; clear: left; border: 0px solid red; }
+.article_footer li.tags { width: 80%; display: block; float: right; clear: right; text-align: right; border: 0px solid red; }
+span.comments_count, span.tags { font-size: 0.7em; }
+a.comments_count, a.tags { color: #09c; }
+a.tags { text-decoration: none; border-bottom: 1px dashed; }
 
 h3#header { margin-bottom: 30px; }
 
 div.sidebar { width: 30%; float: left; border: 0px solid black; }
-h3#archive, h3#feeds { font-size: 1.1em; color: #777; padding-left: 20px; }
-p#archive, p#feeds { }
-a#archive, a#feeds { color: #c66; text-decoration: none; font-weight: bold; }
+h3.archive, h3.feeds { font-size: 1.1em; color: #777; padding-left: 20px; }
+p.archive, p.feeds { }
+a.archive, a.feeds { color: #c66; text-decoration: none; font-weight: bold; }
 
-h3#error { font-size: 1.1em; color: #c00; }
-h4#message { font-size: 0.9em; color: #060; }
+h3.error { font-size: 1.1em; color: #c00; }
+h4.message { font-size: 0.9em; color: #060; }
 
 div.footer { width: 100%; padding-top: 20px; clear: both; text-align: center; }
 .footer p { color: #aaa; }

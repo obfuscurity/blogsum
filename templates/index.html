@@ -18,38 +18,46 @@
 
 <div id="main">
 <TMPL_LOOP name="articles">
-	<h2 class="article_title"><a href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">"><TMPL_VAR name="title"></a></h2>
-	<h3 id="article_date"><TMPL_VAR name="date"> <span class="author">by <a href="/Tags/<TMPL_VAR name="author">"><TMPL_VAR name="author"></a></span></h3>
+	<h2 class="article_title">
+		<a href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">"><TMPL_VAR name="title"></a>
+	</h2>
+	<h3 class="article_date"><TMPL_VAR name="date"> 
+		<span class="author">by <a href="/Tags/<TMPL_VAR name="author">"><TMPL_VAR name="author"></a></span>
+	</h3>
 	<div class="article_body">
 		<TMPL_VAR name="body">
-		<TMPL_IF name="readmore"><p><a href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">">Read the rest of this story...</a></p></TMPL_IF>
+			<TMPL_IF name="readmore">
+				<p>
+					<a href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">">Read the rest of this story...</a>
+				</p>
+			</TMPL_IF>
 	</div>
 
 	<ul class="article_footer">
-	<li id="comments_count"><span id="comments_count">Comments <a id="comments_count" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">#comments">(<TMPL_VAR name="comments_count">)</a></span></li>
+	<li class="comments_count"><span class="comments_count">Comments <a class"comments_count" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">#comments">(<TMPL_VAR name="comments_count">)</a></span></li>
 
 	<TMPL_IF name="tag_loop">
-	<li id="tags"><span id="tags">Tags: <TMPL_LOOP name="tag_loop"> &nbsp;<a id="tags" href="/Tags/<TMPL_VAR name="tag">"><TMPL_VAR name="tag"></a></TMPL_LOOP></span></li>
+	<li class="tags"><span class="tags">Tags: <TMPL_LOOP name="tag_loop"> &nbsp;<a class="tags" href="/Tags/<TMPL_VAR name="tag">"><TMPL_VAR name="tag"></a></TMPL_LOOP></span></li>
 	</TMPL_IF>
 	</ul>
 
 	<TMPL_IF name="comments">
-	<h4 id="comments" name="comments">Comments</h4>
+	<h4 class="comments" name="comments">Comments</h4>
 	<TMPL_LOOP name="comments">
-		<p>at <span id="date"><TMPL_VAR name="date"></span>, <TMPL_IF name="url"><a href="<TMPL_VAR name="url">"></TMPL_IF><TMPL_VAR name="name"><TMPL_IF name="url"></a></TMPL_IF> wrote in to say...</p>
-		<p id="comment_body"><TMPL_VAR name="comment"></p>
+		<p>at <span class="date"><TMPL_VAR name="date"></span>, <TMPL_IF name="url"><a href="<TMPL_VAR name="url">"></TMPL_IF><TMPL_VAR name="name"><TMPL_IF name="url"></a></TMPL_IF> wrote in to say...</p>
+		<p class="comment_body"><TMPL_VAR name="comment"></p>
 	</TMPL_LOOP>
 	</TMPL_IF>
 	<br>
 </TMPL_LOOP>
 
-<TMPL_IF name="error"><h3 id="error"><img src="/images/asterisk-red.gif" style="height: 20px; padding-right: 5px;"><TMPL_VAR name="error"></h3></TMPL_IF>
-<TMPL_IF name="message"><h4 id="message"><img src="/images/asterisk-green.gif" style="height: 20px; padding-right: 5px;"><TMPL_VAR name="message"></h4></TMPL_IF>
+<TMPL_IF name="error"><h3 class="error"><img src="/images/asterisk-red.gif" style="height: 20px; padding-right: 5px;"><TMPL_VAR name="error"></h3></TMPL_IF>
+<TMPL_IF name="message"><h4 class="message"><img src="/images/asterisk-green.gif" style="height: 20px; padding-right: 5px;"><TMPL_VAR name="message"></h4></TMPL_IF>
 
 <TMPL_IF name="comment_form">
-	<div id="comment_form">
+	<div class="comment_form">
 	<p>Add a comment:</p>
-	<form id="comment_form" action="/index.cgi" method="post">
+	<form class="comment_form" action="/index.cgi" method="post">
 		<p><input name="name" size="40" maxlength="100" value="<TMPL_VAR name="name">"> &nbsp; name</p>
 		<p><input name="email" size="40" maxlength="100" value="<TMPL_VAR name="email">"> &nbsp; email</p>
 		<p><input name="url" size="40" maxlength="100" value="<TMPL_VAR name="url">"> &nbsp; url</p>
@@ -63,25 +71,25 @@
 </div>
 
 <div class="sidebar">
-	<h3 id="archive">Archive</h3>
-	<p id="archive">
+	<h3 class="archive">Archive</h3>
+	<p class="archive">
 	<TMPL_LOOP name="archives">
 		<TMPL_IF name="uri">
-			<a id="archive" style="padding-left: 40px;" title="<TMPL_VAR name="full_title">" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">"><TMPL_VAR name="title"></a><br>
+			<a class="archive" style="padding-left: 40px;" title="<TMPL_VAR name="full_title">" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">"><TMPL_VAR name="title"></a><br>
 		<TMPL_ELSE>
 			<TMPL_IF name="month">
-				<a id="archive" style="padding-left: 30px;" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/"><TMPL_VAR name="month_name"></a><br>
+				<a class="archive" style="padding-left: 30px;" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/"><TMPL_VAR name="month_name"></a><br>
 			<TMPL_ELSE>
-				<a id="archive" style="padding-left: 20px;" href="/<TMPL_VAR name="year">/"><TMPL_VAR name="year"></a><br>
+				<a class="archive" style="padding-left: 20px;" href="/<TMPL_VAR name="year">/"><TMPL_VAR name="year"></a><br>
 			</TMPL_IF>
 		</TMPL_IF>
 	</TMPL_LOOP>
 	</p>
 
-	<h3 id="feeds">Feeds</h3>
-	<p id="feeds">
-		<a id="feeds" style="padding-left: 20px;" href="/rss.xml"><img src="/images/xml.gif" alt="RSS 1.0" style="padding-right: 7px;">RSS 1.0</a><br>
-		<a id="feeds" style="padding-left: 20px;" href="/rss2.xml"><img src="/images/xml.gif" alt="RSS 2.0" style="padding-right: 7px;">RSS 2.0</a>
+	<h3 class="feeds">Feeds</h3>
+	<p class="feeds">
+		<a class="feeds" style="padding-left: 20px;" href="/rss.xml"><img src="/images/xml.gif" alt="RSS 1.0" style="padding-right: 7px;">RSS 1.0</a><br>
+		<a class="feeds" style="padding-left: 20px;" href="/rss2.xml"><img src="/images/xml.gif" alt="RSS 2.0" style="padding-right: 7px;">RSS 2.0</a>
 	</p>
 </div>
 
