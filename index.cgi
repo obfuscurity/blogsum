@@ -186,7 +186,7 @@ sub get_articles {
 		$result->{'date'} =~ /(\d{4})\-(\d{2})\-\d{2} \d{2}\:\d{2}\:\d{2}/;
 		($result->{'year'}, $result->{'month'}) = ($1, $2);
 		# cut off readmore if we're on the front page
-		if (($result->{'body'} =~ /<!--readmore-->/) && ($j < 3)) {
+		if (($result->{'body'} =~ /<!--readmore-->/) && ($j < 3) && !($cgi->param('rss'))) {
 			$result->{'body'} =~ /(.*)\<\!\-\-readmore\-\-\>/s;
 			$result->{'body'} = $1;
 			$result->{'readmore'}++;
