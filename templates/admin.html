@@ -1,29 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+	"http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title><TMPL_VAR name="blog_title"></title>
-<link rel="stylesheet" type="text/css" href="/default.css" title="Default">
+	<title><TMPL_VAR name="blog_title"></title>
+	<link rel="stylesheet" type="text/css" href="/default.css" title="Default">
 </head>
 <body>
 
 <div id="wrapper">
+	<div id="header">
+		<h1>
+			<a id="admin" href="/"><TMPL_VAR name="blog_title"></a>
+			<a id="view" href="/admin.cgi?view=<TMPL_VAR name="view">"><TMPL_VAR name="view">.</a>
+		</h1>
+		<h3>
+			<a href="?view=edit">create</a> / <a <TMPL_IF name="comments_to_moderate">style="color: #f00;"</TMPL_IF> href="?view=moderate">moderate</a> / <a href="?view=administrate">administrate</a>
+		</h3>
+	</div>
 
-<h1 class="title"><a href="/admin.cgi"><TMPL_VAR name="blog_title"></a><a id="view" href="/admin.cgi?view=<TMPL_VAR name="view">"><TMPL_VAR name="view">.</a></h1>
+	<TMPL_IF name="error">
+	<h3 id="error">
+		<img src="/images/asterisk-red.gif" style="height: 20px; padding-right: 5px;"> <TMPL_VAR name="error">
+	</h3>
+	</TMPL_IF>
 
-<h3 id="header"><a id="header" href="?view=edit">create</a> / <a id="header" <TMPL_IF name="comments_to_moderate">style="color: #f00;"</TMPL_IF> href="?view=moderate">moderate</a> / <a id="header" href="?view=administrate">administrate</a></h3>
-
-<TMPL_IF name="error"><h3 id="error"><img src="/images/asterisk-red.gif" style="height: 20px; padding-right: 5px;"><TMPL_VAR name="error"></h3></TMPL_IF>
-
-<TMPL_IF name="preview">
-<!-- preview articles -->
+	<TMPL_IF name="preview">
+	<!-- preview articles -->
 	<div id="preview">
 		<h2 class="article_title"><TMPL_VAR name="title"></h2>
 		<h3 id="article_date"><TMPL_VAR name="date"></h3>
 		<div id="article_body"><TMPL_VAR name="body"></div>
 	</div>
-</TMPL_IF>
+	</TMPL_IF>
 
-<TMPL_IF name="edit">
-<!-- create or edit articles -->
+	<TMPL_IF name="edit">
+	<!-- create or edit articles -->
 	<form id="edit" action="/admin.cgi" method="post">
 		<p><input size="80" name="title" value="<TMPL_VAR name="title">"> &nbsp; title</p>
 		<p><input size="80" name="uri" value="<TMPL_VAR name="uri">"> &nbsp; uri</p>
@@ -31,32 +42,63 @@
 		<p><textarea rows="15" cols="80" name="body"><TMPL_VAR name="body"></textarea></p>
 		<p><input type="submit" name="preview" value="preview"> &nbsp;&nbsp; <input type="submit" name="save" value="save"></p>
 		<input type="hidden" name="view" value="edit">
-		<TMPL_IF name="id"><input type="hidden" name="id" value="<TMPL_VAR name="id">"></TMPL_IF>
+		<TMPL_IF name="id">
+			<input type="hidden" name="id" value="<TMPL_VAR name="id">">
+		</TMPL_IF>
 	</form>
-</TMPL_IF>
+	</TMPL_IF>
 
-<TMPL_IF name="articles">
-<!-- manage articles -->
-<TMPL_LOOP name="articles">
-	<p>
-	<TMPL_UNLESS name="enabled"><a id="publish" title="Publish" href="/admin.cgi?view=administrate&publish=<TMPL_VAR name="id">"><img src="/images/play.gif" alt="Publish"></a><TMPL_ELSE><img src="/images/play-disabled.gif" alt="Publish"></TMPL_UNLESS>
-	<a id="edit" title="Edit" href="/admin.cgi?view=edit&id=<TMPL_VAR name="id">"><img src="/images/plus.gif" alt="Edit"></a>
-	<TMPL_IF name="enabled"><a id="draft" title="Draft" href="/admin.cgi?view=administrate&draft=<TMPL_VAR name="id">"><img src="/images/draft.gif" alt="Draft"></a><TMPL_ELSE><img src="/images/draft-disabled.gif" alt="Draft"></TMPL_IF>
-	<a id="delete" title="Delete" href="/admin.cgi?view=administrate&delete=<TMPL_VAR name="id">"><img src="/images/delete.gif" alt="Delete"></a> &nbsp;&nbsp;&nbsp; <TMPL_IF name="enabled"><a id="mod_story" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">" target="_new"><TMPL_ELSE><span id="mod_story_disabled"></TMPL_IF><TMPL_VAR name="title"><TMPL_IF name="enabled"></a><TMPL_ELSE></span></TMPL_IF> &nbsp; submitted by <span id="mod_user"><TMPL_VAR name="author"></span> on <span id="mod_date"><TMPL_VAR name="date"></span>
-	</p>
-</TMPL_LOOP>
-</TMPL_IF>
+	<TMPL_IF name="articles">
+	<!-- manage articles -->
+	<TMPL_LOOP name="articles">
+		<p>
+		<TMPL_UNLESS name="enabled">
+			<a id="publish" title="Publish" href="/admin.cgi?view=administrate&publish=<TMPL_VAR name="id">"><img src="/images/play.gif" alt="Publish"></a>
+		<TMPL_ELSE>
+			<img src="/images/play-disabled.gif" alt="Publish">
+		</TMPL_UNLESS>
+			<a id="edit" title="Edit" href="/admin.cgi?view=edit&id=<TMPL_VAR name="id">"><img src="/images/plus.gif" alt="Edit"></a>
+		<TMPL_IF name="enabled">
+			<a id="draft" title="Draft" href="/admin.cgi?view=administrate&draft=<TMPL_VAR name="id">"><img src="/images/draft.gif" alt="Draft"></a>
+		<TMPL_ELSE>
+			<img src="/images/draft-disabled.gif" alt="Draft">
+		</TMPL_IF>
+			<a id="delete" title="Delete" href="/admin.cgi?view=administrate&delete=<TMPL_VAR name="id">"><img src="/images/delete.gif" alt="Delete"></a> &nbsp;&nbsp;&nbsp; 
+		<TMPL_IF name="enabled">
+			<a id="mod_story" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">" target="_new">
+		<TMPL_ELSE>
+			<span id="mod_story_disabled">
+		</TMPL_IF>
+			<TMPL_VAR name="title">
+		<TMPL_IF name="enabled">
+			</a>
+		<TMPL_ELSE>
+			</span>
+		</TMPL_IF> 
+			&nbsp; submitted by <span id="mod_user"><TMPL_VAR name="author"></span>
+			on <span id="mod_date"><TMPL_VAR name="date"></span>
+		</p>
+	</TMPL_LOOP>
+	</TMPL_IF>
 
-<TMPL_IF name="comments">
-<!-- manage comments -->
-<TMPL_LOOP name="comments">
-	<hr style="height: 1px; width: 100%; color: #999; background-color: #999; border: 0;"></hr>
-	<p><a id="publish" href="/admin.cgi?view=moderate&publish=<TMPL_VAR name="id">"><img src="/images/check.gif" alt="Publish"></a> <a id="delete" href="/admin.cgi?view=moderate&delete=<TMPL_VAR name="id">"><img src="/images/delete.gif" alt="Delete"></a> &nbsp; comment in article &nbsp; <a id="mod_story" href="/<TMPL_VAR name="article_year">/<TMPL_VAR name="article_month">/<TMPL_VAR name="article_uri">" target="_new"><TMPL_VAR name="article_title"></a>
-	<br>submitted by <span id="mod_user"><TMPL_VAR name="name"></span> at <TMPL_VAR name="date"></p>
-	<p>&quot;<TMPL_VAR name="comment">&quot;</p>
-</TMPL_LOOP>
-</TMPL_IF>
-
+	<TMPL_IF name="comments">
+	<!-- manage comments -->
+	<TMPL_LOOP name="comments">
+		<hr style="height: 1px; width: 100%; color: #999; background-color: #999; border: 0;"></hr>
+		<p>
+			<a id="publish" href="/admin.cgi?view=moderate&publish=<TMPL_VAR name="id">"><img src="/images/check.gif" alt="Publish"></a> 
+			<a id="delete" href="/admin.cgi?view=moderate&delete=<TMPL_VAR name="id">"><img src="/images/delete.gif" alt="Delete"></a> 
+			&nbsp; comment in article &nbsp; 
+			<a id="mod_story" href="/<TMPL_VAR name="article_year">/<TMPL_VAR name="article_month">/<TMPL_VAR name="article_uri">" target="_new"><TMPL_VAR name="article_title"></a>
+			<br>
+			submitted by <span id="mod_user"><TMPL_VAR name="name"></span> 
+			at <TMPL_VAR name="date">
+		</p>
+		<p>
+			&quot;<TMPL_VAR name="comment">&quot;
+		</p>
+	</TMPL_LOOP>
+	</TMPL_IF>
 </div>
 
 <pre id="dump"><TMPL_VAR name="dump"></pre>

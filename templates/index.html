@@ -1,120 +1,157 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+	"http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<title><TMPL_VAR name="title"></title>
-<link rel="stylesheet" type="text/css" href="/default.css" title="Default">
-<link rel="alternate" type="application/rss+xml" href="/rss.xml" title="RSS 1.0">
-<link rel="alternate" type="application/rss+xml" href="/rss2.xml" title="RSS 2.0">
-<TMPL_VAR name="captcha_options">
-<TMPL_IF name="google_webmaster_id"><meta name="verify-v1" content="<TMPL_VAR name="google_webmaster_id">"></TMPL_IF>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title><TMPL_VAR name="title"></title>
+	<link rel="stylesheet" type="text/css" href="/default.css" title="Default">
+	<link rel="alternate" type="application/rss+xml" href="/rss.xml" title="RSS 1.0">
+	<link rel="alternate" type="application/rss+xml" href="/rss2.xml" title="RSS 2.0">
+	<TMPL_VAR name="captcha_options">
+	<TMPL_IF name="google_webmaster_id">
+		<meta name="verify-v1" content="<TMPL_VAR name="google_webmaster_id">">
+	</TMPL_IF>
 </head>
 <body>
-
 <div id="wrapper">
-
-<div id="header">
-	<h1 class="title"><a id="foo" href="/"><TMPL_VAR name="title"></a><br>
-	<span id="subtitle"><TMPL_VAR name="subtitle"></span><br></h1>
-</div>
-
-<div id="main">
-<TMPL_LOOP name="articles">
-	<h2 class="article_title">
-		<a href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">"><TMPL_VAR name="title"></a>
-	</h2>
-	<h3 class="article_date"><TMPL_VAR name="date"> 
-		<span class="author">by <a href="/Tags/<TMPL_VAR name="author">"><TMPL_VAR name="author"></a></span>
-	</h3>
-	<div class="article_body">
-		<TMPL_VAR name="body">
-			<TMPL_IF name="readmore">
-				<p>
-					<a href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">">Read the rest of this story...</a>
-				</p>
-			</TMPL_IF>
+	<div id="header">
+		<h1>
+			<a href="/"><TMPL_VAR name="title"></a><br>
+			<span><TMPL_VAR name="subtitle"></span>
+		</h1>
 	</div>
-
-	<ul class="article_footer">
-	<li class="comments_count"><span class="comments_count">Comments <a class="comments_count" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">#comments">(<TMPL_VAR name="comments_count">)</a></span></li>
-
-	<TMPL_IF name="tag_loop">
-	<li class="tags"><span class="tags">Tags: <TMPL_LOOP name="tag_loop"> &nbsp;<a class="tags" href="/Tags/<TMPL_VAR name="tag">"><TMPL_VAR name="tag"></a></TMPL_LOOP></span></li>
-	</TMPL_IF>
-	</ul>
-
-	<TMPL_IF name="comments">
-	<h4 class="comments" name="comments">Comments</h4>
-	<TMPL_LOOP name="comments">
-		<p>at <span class="date"><TMPL_VAR name="date"></span>, <TMPL_IF name="url"><a href="<TMPL_VAR name="url">"></TMPL_IF><TMPL_VAR name="name"><TMPL_IF name="url"></a></TMPL_IF> wrote in to say...</p>
-		<p class="comment_body"><TMPL_VAR name="comment"></p>
-	</TMPL_LOOP>
-	</TMPL_IF>
-	<br>
-</TMPL_LOOP>
-
-<TMPL_IF name="error"><h3 class="error"><img src="/images/asterisk-red.gif" style="height: 20px; padding-right: 5px;"><TMPL_VAR name="error"></h3></TMPL_IF>
-<TMPL_IF name="message"><h4 class="message"><img src="/images/asterisk-green.gif" style="height: 20px; padding-right: 5px;"><TMPL_VAR name="message"></h4></TMPL_IF>
-
-<TMPL_IF name="comment_form">
-	<div class="comment_form">
-	<p>Add a comment:</p>
-	<form class="comment_form" action="/index.cgi" method="post">
-		<p><input name="name" size="40" maxlength="100" value="<TMPL_VAR name="name">"> &nbsp; name</p>
-		<p><input name="email" size="40" maxlength="100" value="<TMPL_VAR name="email">"> &nbsp; email</p>
-		<p><input name="url" size="40" maxlength="100" value="<TMPL_VAR name="url">"> &nbsp; url</p>
-		<p>max length <TMPL_VAR name="comment_max_length"> chars<br><textarea rows="3" cols="30" name="comment"><TMPL_VAR name="comment"></textarea></p>
-		<TMPL_VAR name="captcha">
-		<p><input type="submit" name="submit" value="submit comment"></p>
-		<input type="hidden" name="id" value="<TMPL_VAR name="id">">
-	</form>
-	</div>
-</TMPL_IF>
-</div>
-
-<div class="sidebar">
-	<h3 class="archive">Archive</h3>
-	<p class="archive">
-	<TMPL_LOOP name="archives">
-		<TMPL_IF name="uri">
-			<a class="archive" style="padding-left: 40px;" title="<TMPL_VAR name="full_title">" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">"><TMPL_VAR name="title"></a><br>
-		<TMPL_ELSE>
-			<TMPL_IF name="month">
-				<a class="archive" style="padding-left: 30px;" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/"><TMPL_VAR name="month_name"></a><br>
-			<TMPL_ELSE>
-				<a class="archive" style="padding-left: 20px;" href="/<TMPL_VAR name="year">/"><TMPL_VAR name="year"></a><br>
+	<div id="main">
+	<TMPL_LOOP name="articles">
+		<div class="article">
+			<h2>
+				<a href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">">
+				<TMPL_VAR name="title"></a>
+			</h2>
+			<h3><TMPL_VAR name="date"> 
+				<span>by <a href="/Tags/<TMPL_VAR name="author">"><TMPL_VAR name="author"></a></span>
+			</h3>
+			<div>
+				<TMPL_VAR name="body">
+				<TMPL_IF name="readmore">
+					<p>
+						<a href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">">
+						Read the rest of this story...</a>
+					</p>
+				</TMPL_IF>
+			</div>
+			<ul>
+				<li class="comments_count">
+					<span>Comments <a href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">#comments">(<TMPL_VAR name="comments_count">)</a></span>
+				</li>
+				<TMPL_IF name="tag_loop">
+				<li class="tags">
+					<span>Tags:
+						<TMPL_LOOP name="tag_loop">
+							&nbsp; <a href="/Tags/<TMPL_VAR name="tag">"> <TMPL_VAR name="tag"></a>
+						</TMPL_LOOP>
+					</span>
+				</li>
+				</TMPL_IF>
+			</ul>
+			<TMPL_IF name="comments">
+			<div class="comments">
+				<h4>Comments</h4>
+				<TMPL_LOOP name="comments">
+					<h5>at <span><TMPL_VAR name="date"></span>,
+						<TMPL_IF name="url">
+							<a href="<TMPL_VAR name="url">">
+						</TMPL_IF>
+						<TMPL_VAR name="name">
+						<TMPL_IF name="url"></a></TMPL_IF> 
+						wrote in to say...
+					</h5>
+					<p>
+						<TMPL_VAR name="comment">
+					</p>
+				</TMPL_LOOP>
+			</div>
 			</TMPL_IF>
+		</div> 
+		</TMPL_LOOP>
+	<!-- end of articles -->
+	<!-- error and notification message handling -->
+	<TMPL_IF name="error">
+		<h3 class="error">
+			<img src="/images/asterisk-red.gif" style="height: 20px; padding-right: 5px;"> <TMPL_VAR name="error">
+		</h3>
 		</TMPL_IF>
-	</TMPL_LOOP>
-	</p>
+	<TMPL_IF name="message">
+		<h3 class="message">
+			<img src="/images/asterisk-green.gif" style="height: 20px; padding-right: 5px;"> <TMPL_VAR name="message">
+		</h3>
+	</TMPL_IF>
 
-	<h3 class="feeds">Feeds</h3>
-	<p class="feeds">
-		<a class="feeds" style="padding-left: 20px;" href="/rss.xml"><img src="/images/xml.gif" alt="RSS 1.0" style="padding-right: 7px;">RSS 1.0</a><br>
-		<a class="feeds" style="padding-left: 20px;" href="/rss2.xml"><img src="/images/xml.gif" alt="RSS 2.0" style="padding-right: 7px;">RSS 2.0</a>
-	</p>
-</div>
-
-<div class="footer">
-	<TMPL_IF name="page_last"><a href="/Page/<TMPL_VAR name="page_last">">previous</a></TMPL_IF>
-	<TMPL_IF name="page_next"><a href="/Page/<TMPL_VAR name="page_next">">next</a></TMPL_IF>
-	<hr>
-	<p>&copy; <TMPL_VAR name="copyright"></p>
-</div>
-</div>
+	<!-- comment submission form -->
+	<TMPL_IF name="comment_form">
+		<div class="comment_form">
+			<p>Add a comment:</p>
+			<form action="/index.cgi" method="post">
+				<p><input name="name" size="40" maxlength="100" value="<TMPL_VAR name="name">"> &nbsp; name</p>
+				<p><input name="email" size="40" maxlength="100" value="<TMPL_VAR name="email">"> &nbsp; email</p>
+				<p><input name="url" size="40" maxlength="100" value="<TMPL_VAR name="url">"> &nbsp; url</p>
+				<p>max length <TMPL_VAR name="comment_max_length"> chars<br>
+					<textarea rows="3" cols="30" name="comment"><TMPL_VAR name="comment"></textarea>
+				</p>
+				<TMPL_VAR name="captcha">
+				<p><input type="submit" name="submit" value="submit comment"></p>
+				<input type="hidden" name="id" value="<TMPL_VAR name="id">">
+			</form>
+		</div>
+		</TMPL_IF>
+	</div> <!-- end of #main -->
+	<div id="sidebar">
+		<div id="archive">
+			<h3>Archive</h3>
+			<p>
+			<TMPL_LOOP name="archives"> 
+				<TMPL_IF name="uri"> <!-- styles need to be here to keep indentation simple -->
+					<a style="padding-left: 40px;" title="<TMPL_VAR name="full_title">" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">"><TMPL_VAR name="title"></a><br>
+				<TMPL_ELSE>
+					<TMPL_IF name="month">
+						<a style="padding-left: 30px;" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/"><TMPL_VAR name="month_name"></a><br>
+					<TMPL_ELSE>
+						<a style="padding-left: 20px;" href="/<TMPL_VAR name="year">/"><TMPL_VAR name="year"></a><br>
+					</TMPL_IF>
+				</TMPL_IF>
+			</TMPL_LOOP>
+			</p>
+		</div>
+		<div id="feeds">
+			<h3>Feeds</h3>
+			<p>
+				<a href="/rss.xml"><img src="/images/xml.gif" alt="RSS 1.0">RSS 1.0</a><br>
+				<a href="/rss2.xml"><img src="/images/xml.gif" alt="RSS 2.0">RSS 2.0</a>
+			</p>
+		</div>
+	</div> <!-- end of sidebar -->
+	<div id="footer">
+		<TMPL_IF name="page_last"><a href="/Page/<TMPL_VAR name="page_last">">previous</a></TMPL_IF>
+		<TMPL_IF name="page_next"><a href="/Page/<TMPL_VAR name="page_next">">next</a></TMPL_IF>
+		<br>
+		<p>&copy; <TMPL_VAR name="copyright"></p>
+	</div> <!-- end of footer -->
+</div> <!-- end of wrapper -->
 
 <pre id="dump"><TMPL_VAR name="dump"></pre>
 
-<TMPL_IF name="google_analytics_id">
+<TMPL_IF name="google_analytics_id"> <!-- analytics support -->
 <script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'
+					type='text/javascript'%3E%3C/script%3E"));
 </script>
 <script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("<TMPL_VAR name="google_analytics_id">");
-pageTracker._trackPageview();
-} catch(err) {}</script>
+		try {
+		var pageTracker = _gat._getTracker("<TMPL_VAR name="google_analytics_id">");
+		pageTracker._trackPageview();
+		} catch(err) {}
+</script>
 </TMPL_IF>
+ 
 </body>
 </html>
