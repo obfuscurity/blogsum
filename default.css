@@ -27,10 +27,6 @@ pre, tt { font-family: Courier; }
 #mod_user, #mod_date { font-size: 1.1em; font-weight: bold; }
 #mod_story_disabled { color: #999; }
 #preview { padding: 0 5% 0; margin: 0 10% 10% 0; background-color: #fff; }
-#publish { text-decoration: none; color: #3c0; }
-#edit { text-decoration: none; color: #03f; }
-#draft { text-decoration: none; color: #f90; }
-#delete { text-decoration: none; color: #f00; }
 
 /*article display*/
 .article { width: 100%; float:left; clear: none; position: relative; padding: 3% 0; }
