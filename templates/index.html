@@ -40,9 +40,11 @@
 				</TMPL_IF>
 			</div>
 			<ul>
+				<TMPL_UNLESS name="comments">
 				<li class="comments_count">
 					<span>Comments <a href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">#comments">(<TMPL_VAR name="comments_count">)</a></span>
 				</li>
+				</TMPL_UNLESS>
 				<TMPL_IF name="tag_loop">
 				<li class="tags">
 					<span>Tags:
@@ -55,6 +57,7 @@
 			</ul>
 			<TMPL_IF name="comments">
 			<div class="comments">
+				<a name="comments"></a>
 				<h4>Comments</h4>
 				<TMPL_LOOP name="comments">
 					<h5>at <span><TMPL_VAR name="date"></span>,
