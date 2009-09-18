@@ -214,7 +214,7 @@ sub get_archives {
 	my %history;
 	my @archives;
 	my @archives_compressed;
-	my $year = $cgi->param('year') || (localtime)[5];
+	my $year = $cgi->param('year') || ((localtime)[5] + 1900);
 	my %months = (
 			'01' => 'January',
 			'02' => 'February',
