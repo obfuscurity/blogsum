@@ -31,7 +31,6 @@ my $google_webmaster_id = $Blogsum::Config::google_webmaster_id;
 ###########################
 # main execution          #
 ###########################
-use strict;
 my $cgi = CGI->new;
 my $dbh = DBI->connect("DBI:SQLite:dbname=$database", '', '', { RaiseError => 1 }) || die $DBI::errstr;
 my $template = HTML::Template->new(filename => $tmplfile_index, die_on_bad_params => 0);
