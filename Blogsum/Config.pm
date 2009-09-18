@@ -17,6 +17,7 @@ use strict;
 our $database = 'data/site.db';
 our $tmplfile_index = 'templates/index.html';
 our $tmplfile_admin = 'templates/admin.html';
+our $blog_theme = 'default';
 our $blog_title = 'example.com';
 our $blog_subtitle = 'My New Blog';
 our $blog_url = 'http://www.example.com/';

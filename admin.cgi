@@ -10,6 +10,7 @@ use strict;
 use Blogsum::Config;
 my $database = $Blogsum::Config::database;
 my $tmplfile_admin = $Blogsum::Config::tmplfile_admin;
+my $blog_theme = $Blogsum::Config::blog_theme;
 my $blog_title = $Blogsum::Config::blog_title;
 
 
@@ -19,6 +20,7 @@ my $blog_title = $Blogsum::Config::blog_title;
 my $cgi = CGI->new;
 my $dbh = DBI->connect("DBI:SQLite:dbname=$database", '', '', { RaiseError => 1 }) || die $DBI::errstr;
 my $template = HTML::Template->new(filename => $tmplfile_admin, die_on_bad_params => 0);
+$template->param( theme => $blog_theme );
 my $view;
 
 if ($cgi->param('view')) {
@@ -188,6 +190,7 @@ sub get_articles {
 		($result->{'year'}, $result->{'month'}) = ($1, $2);
 		$result->{'date'} =~ s/(\d{4}\-\d{2}\-\d{2}) \d{2}\:\d{2}\:\d{2}/$1/;
 		delete $result->{'enabled'} if ($result->{'enabled'} == 0);
+		$result->{'theme'} = $blog_theme;
 		push(@articles, $result);
 	}
 

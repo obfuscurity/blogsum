@@ -3,7 +3,7 @@
 <html>
 <head>
 	<title><TMPL_VAR name="blog_title"></title>
-	<link rel="stylesheet" type="text/css" href="/default.css" title="Default">
+	<link rel="stylesheet" type="text/css" href="/themes/<TMPL_VAR name="theme">/default.css" title="Default">
 </head>
 <body>
 
@@ -20,7 +20,7 @@
 
 	<TMPL_IF name="error">
 	<h3 id="error">
-		<img src="/images/asterisk-red.gif" style="height: 20px; padding-right: 5px;"> <TMPL_VAR name="error">
+		<img src="/themes/<TMPL_VAR name="theme">/images/asterisk-red.gif" style="height: 20px; padding-right: 5px;"> <TMPL_VAR name="error">
 	</h3>
 	</TMPL_IF>
 
@@ -53,17 +53,17 @@
 	<TMPL_LOOP name="articles">
 		<p>
 		<TMPL_UNLESS name="enabled">
-			<a title="Publish" href="/admin.cgi?view=administrate&publish=<TMPL_VAR name="id">"><img src="/images/play.gif" alt="Publish"></a>
+			<a title="Publish" href="/admin.cgi?view=administrate&publish=<TMPL_VAR name="id">"><img src="/themes/<TMPL_VAR name="theme">/images/play.gif" alt="Publish"></a>
 		<TMPL_ELSE>
-			<img src="/images/play-disabled.gif" alt="Publish">
+			<img src="/themes/<TMPL_VAR name="theme">/images/play-disabled.gif" alt="Publish">
 		</TMPL_UNLESS>
-			<a title="Edit" href="/admin.cgi?view=edit&id=<TMPL_VAR name="id">"><img src="/images/plus.gif" alt="Edit"></a>
+			<a title="Edit" href="/admin.cgi?view=edit&id=<TMPL_VAR name="id">"><img src="/themes/<TMPL_VAR name="theme">/images/plus.gif" alt="Edit"></a>
 		<TMPL_IF name="enabled">
-			<a title="Draft" href="/admin.cgi?view=administrate&draft=<TMPL_VAR name="id">"><img src="/images/draft.gif" alt="Draft"></a>
+			<a title="Draft" href="/admin.cgi?view=administrate&draft=<TMPL_VAR name="id">"><img src="/themes/<TMPL_VAR name="theme">/images/draft.gif" alt="Draft"></a>
 		<TMPL_ELSE>
-			<img src="/images/draft-disabled.gif" alt="Draft">
+			<img src="/themes/<TMPL_VAR name="theme">/images/draft-disabled.gif" alt="Draft">
 		</TMPL_IF>
-			<a title="Delete" href="/admin.cgi?view=administrate&delete=<TMPL_VAR name="id">"><img src="/images/delete.gif" alt="Delete"></a> &nbsp;&nbsp;&nbsp; 
+			<a title="Delete" href="/admin.cgi?view=administrate&delete=<TMPL_VAR name="id">"><img src="/themes/<TMPL_VAR name="theme">/images/delete.gif" alt="Delete"></a> &nbsp;&nbsp;&nbsp; 
 		<TMPL_IF name="enabled">
 			<a id="mod_story" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">" target="_new">
 		<TMPL_ELSE>
@@ -86,8 +86,8 @@
 	<TMPL_LOOP name="comments">
 		<hr style="height: 1px; width: 100%; color: #999; background-color: #999; border: 0;"></hr>
 		<p>
-			<a id="publish" href="/admin.cgi?view=moderate&publish=<TMPL_VAR name="id">"><img src="/images/check.gif" alt="Publish"></a> 
-			<a id="delete" href="/admin.cgi?view=moderate&delete=<TMPL_VAR name="id">"><img src="/images/delete.gif" alt="Delete"></a> 
+			<a id="publish" href="/admin.cgi?view=moderate&publish=<TMPL_VAR name="id">"><img src="/themes/<TMPL_VAR name="theme">/images/check.gif" alt="Publish"></a> 
+			<a id="delete" href="/admin.cgi?view=moderate&delete=<TMPL_VAR name="id">"><img src="/themes/<TMPL_VAR name="theme">/images/delete.gif" alt="Delete"></a> 
 			&nbsp; comment in article &nbsp; 
 			<a id="mod_story" href="/<TMPL_VAR name="article_year">/<TMPL_VAR name="article_month">/<TMPL_VAR name="article_uri">" target="_new"><TMPL_VAR name="article_title"></a>
 			<br>

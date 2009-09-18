@@ -11,6 +11,7 @@ use strict;
 use Blogsum::Config;
 my $database = $Blogsum::Config::database;
 my $tmplfile_index = $Blogsum::Config::tmplfile_index;
+my $blog_theme = $Blogsum::Config::blog_theme;
 my $blog_title = $Blogsum::Config::blog_title;
 my $blog_subtitle = $Blogsum::Config::blog_subtitle;
 my $blog_url = $Blogsum::Config::blog_url;
@@ -41,6 +42,7 @@ if ($cgi->param('rss')) {
 	my $articles = get_articles();
 	my $archives = get_archives();
 	$template->param( archives => $archives );
+	$template->param( theme => $blog_theme );
 	$template->param( title => $blog_title );
 	$template->param( subtitle => $blog_subtitle );
 	$template->param( copyright => $blog_rights );
