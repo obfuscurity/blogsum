@@ -214,6 +214,8 @@ sub get_archives {
 
 	my %history;
 	my @archives;
+	my @archives_compressed;
+	my $year = $cgi->param('year') || (localtime)[5];
 	my %months = (
 			'01' => 'January',
 			'02' => 'February',
@@ -228,6 +230,7 @@ sub get_archives {
 			'11' => 'November',
 			'12' => 'December',
 	);
+	my $month = $cgi->param('month') || sprintf("%0.2d", ((localtime)[4] + 1));
 
 	my $query = 'SELECT * FROM articles WHERE enabled=1 ORDER BY date DESC';
 	my $sth = $dbh->prepare($query);
@@ -248,7 +251,6 @@ sub get_archives {
 			$history{$result->{'year'}}{$result->{'month'}}{'exists'}++;
 		}
 		my $title = my $full_title = $result->{'title'};
-		#my $title = $full_title;
 		if (length($title) > 28) {
 			$title = substr($title, 0, 25) . '...';
 		}
@@ -261,7 +263,23 @@ sub get_archives {
 				uri => $result->{'uri'},
 		});
 	}
-	return \@archives;
+
+	for my $item (@archives) {
+		# year and month match, show all links
+		if (($item->{'year'} eq $year) && ($item->{'month'} eq $month)) {
+			push(@archives_compressed, $item);
+		# year matches, show year or year/month links
+		} elsif (($item->{'year'} eq $year) && !($item->{'title'})) {
+			push(@archives_compressed, $item);
+		# no matches, just show year
+		} elsif ($item->{'year'} && !($item->{'month'}) && !($item->{'title'})) {
+			push(@archives_compressed, $item);
+		} else {
+			next;
+		}
+	}
+
+	return \@archives_compressed;
 }
 
 sub format_tags {
