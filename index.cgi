@@ -203,8 +203,10 @@ sub get_articles {
 	my $sth2 = $dbh->prepare($query2);
 	$sth2->execute || die $dbh->errstr;
 	my $article_count = $sth2->fetchrow_hashref->{'total'};
-	$template->param( page_next => ($page + 1) ) if ($article_count > ($offset + $articles_per_page));
-	$template->param( page_last => ($page - 1) ) if (($page > 1) && ($article_count > $offset));
+	if ($j < 3) {
+		$template->param( page_next => ($page + 1) ) if ($article_count > ($offset + $articles_per_page));
+		$template->param( page_last => ($page - 1) ) if (($page > 1) && ($article_count > $offset));
+	}
 
 	return (\@articles);
 }
