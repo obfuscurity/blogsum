@@ -171,7 +171,7 @@ sub get_articles {
 	
 	if ($j == 3) {
 		$sth->execute($cgi->param('uri')) || die $dbh->errstr;
-} elsif ($cgi->param('search')) {
+	} elsif ($cgi->param('search')) {
 		my $search_tag = sprintf("%%%s%%", $cgi->param('search'));
 		$sth->execute($search_tag, $search_tag) || die $dbh->errstr;
 	} elsif ($cgi->param('id')) {
