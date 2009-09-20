@@ -10,7 +10,6 @@
 use strict;
 use Blogsum::Config;
 my $database = $Blogsum::Config::database;
-my $tmplfile_index = $Blogsum::Config::tmplfile_index;
 my $blog_theme = $Blogsum::Config::blog_theme;
 my $blog_title = $Blogsum::Config::blog_title;
 my $blog_subtitle = $Blogsum::Config::blog_subtitle;
@@ -34,7 +33,7 @@ my $google_webmaster_id = $Blogsum::Config::google_webmaster_id;
 ###########################
 my $cgi = CGI->new;
 my $dbh = DBI->connect("DBI:SQLite:dbname=$database", '', '', { RaiseError => 1 }) || die $DBI::errstr;
-my $template = HTML::Template->new(filename => $tmplfile_index, die_on_bad_params => 0);
+my $template = HTML::Template->new(filename => "themes/${blog_theme}/index.tmpl", die_on_bad_params => 0);
 if ($cgi->param('rss')) {
 	output_rss();
 } else {

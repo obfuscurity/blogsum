@@ -9,7 +9,6 @@
 use strict;
 use Blogsum::Config;
 my $database = $Blogsum::Config::database;
-my $tmplfile_admin = $Blogsum::Config::tmplfile_admin;
 my $blog_theme = $Blogsum::Config::blog_theme;
 my $blog_title = $Blogsum::Config::blog_title;
 
@@ -19,7 +18,7 @@ my $blog_title = $Blogsum::Config::blog_title;
 ###########################
 my $cgi = CGI->new;
 my $dbh = DBI->connect("DBI:SQLite:dbname=$database", '', '', { RaiseError => 1 }) || die $DBI::errstr;
-my $template = HTML::Template->new(filename => $tmplfile_admin, die_on_bad_params => 0);
+my $template = HTML::Template->new(filename => "themes/${blog_theme}/admin.tmpl", die_on_bad_params => 0);
 $template->param( theme => $blog_theme );
 my $view;
 
