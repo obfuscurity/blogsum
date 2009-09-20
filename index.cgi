@@ -218,7 +218,7 @@ sub get_archives {
 	my %history;
 	my @archives;
 	my @archives_compressed;
-	my $year = $cgi->param('year') || ((localtime)[5] + 1900);
+	my $current_year = $cgi->param('year') || ((localtime)[5] + 1900);
 	my %months = (
 			'01' => 'January',
 			'02' => 'February',
@@ -233,7 +233,7 @@ sub get_archives {
 			'11' => 'November',
 			'12' => 'December',
 	);
-	my $month = $cgi->param('month') || sprintf("%0.2d", ((localtime)[4] + 1));
+	my $current_month = $cgi->param('month') || sprintf("%0.2d", ((localtime)[4] + 1));
 
 	my $query = 'SELECT * FROM articles WHERE enabled=1 ORDER BY date DESC';
 	my $sth = $dbh->prepare($query);
@@ -241,48 +241,56 @@ sub get_archives {
 	while (my $result = $sth->fetchrow_hashref) {
 		$result->{'date'} =~ /(\d{4})\-(\d{2})\-\d{2} \d{2}\:\d{2}\:\d{2}/;
 		($result->{'year'}, $result->{'month'}) = ($1, $2);
-		unless ($history{$result->{'year'}}) {
-			push(@archives, { year => $result->{'year'} });
-			$history{$result->{'year'}}{'exists'}++;
-		}
-		unless ($history{$result->{'year'}}{$result->{'month'}}) {
-			push(@archives, {
-					year => $result->{'year'},
-					month => $result->{'month'},
-					month_name => $months{$result->{'month'}},
-			});
-			$history{$result->{'year'}}{$result->{'month'}}{'exists'}++;
-		}
 		my $title = my $full_title = $result->{'title'};
 		if (length($title) > 28) {
 			$title = substr($title, 0, 25) . '...';
 		}
-		push(@archives, {
-				year => $result->{'year'},
-				month => $result->{'month'},
-				month_name => $months{$result->{'month'}},
-				title => $title,
-				full_title => $full_title,
-				uri => $result->{'uri'},
-		});
-	}
 
-	for my $item (@archives) {
-		# year and month match, show all links
-		if (($item->{'year'} eq $year) && ($item->{'month'} eq $month)) {
-			push(@archives_compressed, $item);
-		# year matches, show year or year/month links
-		} elsif (($item->{'year'} eq $year) && !($item->{'title'})) {
-			push(@archives_compressed, $item);
-		# no matches, just show year
-		} elsif ($item->{'year'} && !($item->{'month'}) && !($item->{'title'})) {
-			push(@archives_compressed, $item);
+		if (($result->{'year'} eq $current_year) && ($result->{'month'} eq $current_month) && $result->{'uri'}) {
+			push(@{$history{$result->{'year'}}{$result->{'month'}}->{'uri_loop'}},
+				{
+					year => $result->{'year'},
+					month => $result->{'month'},
+					month_name => $months{$result->{'month'}},
+					title => $title,
+					full_title => $full_title,
+					uri => $result->{'uri'},
+				}
+			);
 		} else {
-			next;
+			$history{$result->{'year'}}->{$result->{'month'}}->{'count'}++;
 		}
+		$history{$result->{'year'}}->{'count'}++;
+
 	}
 
-	return \@archives_compressed;
+	for my $year (sort {$b <=> $a} keys %history) {
+		no strict "refs";
+		for my $month (sort {$b <=> $a} keys %{$history{$year}}) {
+			my $m = {
+				'year' => $year,
+				'month' => $month,
+				'month_name' => $months{$month},
+				'count' => $history{$year}->{$month}->{'count'},
+			};
+			# check to see if uri_loop exists first
+			if ($history{$year}->{$month}->{'uri_loop'}) {
+				$m->{'uri_loop'} = $history{$year}->{$month}->{'uri_loop'};
+			}
+			push(@{$history{$year}->{'month_loop'}}, $m) unless ($month eq 'count');
+		}
+		my $y = {
+			'year' => $year,
+			'count' => $history{$year}->{'count'},
+		};
+		# check to see if we're showing this year, and that month_loop exists
+		if (($year eq $current_year) && $history{$year}->{'month_loop'}) {
+			$y->{'month_loop'} = $history{$year}->{'month_loop'};
+		}
+		push(@{$history{'year_loop'}}, $y) unless ($year eq 'count');
+	}
+		
+	return \@{$history{'year_loop'}};
 }
 
 sub format_tags {

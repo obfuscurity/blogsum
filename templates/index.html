@@ -107,29 +107,31 @@
 		</div>
 		</TMPL_IF>
 	</div> <!-- end of #main -->
-	<div id="sidebar">
+	<div class="sidebar">
 		<div id="archive">
 			<h3>Archive</h3>
-			<p>
 			<TMPL_LOOP name="archives"> 
-				<TMPL_IF name="uri"> <!-- styles need to be here to keep indentation simple -->
-					<a style="padding-left: 40px;" title="<TMPL_VAR name="full_title">" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">"><TMPL_VAR name="title"></a><br>
-				<TMPL_ELSE>
-					<TMPL_IF name="month">
-						<a style="padding-left: 30px;" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/"><TMPL_VAR name="month_name"></a><br>
-					<TMPL_ELSE>
-						<a style="padding-left: 20px;" href="/<TMPL_VAR name="year">/"><TMPL_VAR name="year"></a><br>
-					</TMPL_IF>
-				</TMPL_IF>
+			<ul>
+				<li class="year"><a href="/<TMPL_VAR name="year">/"><TMPL_VAR name="year"></a><span class="count"> (<TMPL_VAR name="count">)</span></li>
+				<TMPL_LOOP name="month_loop">
+				<ul>
+					<li class="month"><a href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/"><TMPL_VAR name="month_name"></a><TMPL_IF name="count"><span class="count"> (<TMPL_VAR name="count">)</TMPL_IF></span></li>
+					<TMPL_LOOP name="uri_loop">
+					<ul>
+						<li class="uri"><a title="<TMPL_VAR name="full_title">" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">"><TMPL_VAR name="title"></a></li>
+					</ul>
+					</TMPL_LOOP>
+				</ul>
+				</TMPL_LOOP>
+			</ul>
 			</TMPL_LOOP>
-			</p>
 		</div>
 		<div id="feeds">
 			<h3>Feeds</h3>
-			<p>
-				<a href="/rss.xml"><img src="/themes/<TMPL_VAR name="theme">/images/xml.gif" alt="RSS 1.0">RSS 1.0</a><br>
-				<a href="/rss2.xml"><img src="/themes/<TMPL_VAR name="theme">/images/xml.gif" alt="RSS 2.0">RSS 2.0</a>
-			</p>
+			<ul>
+				<li><a href="/rss.xml"><img src="/themes/<TMPL_VAR name="theme">/images/xml.gif" alt="RSS 1.0">RSS 1.0</a></li>
+				<li><a href="/rss2.xml"><img src="/themes/<TMPL_VAR name="theme">/images/xml.gif" alt="RSS 2.0">RSS 2.0</a></li>
+			</ul>
 		</div>
 	</div> <!-- end of sidebar -->
 	<div id="footer">
