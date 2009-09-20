@@ -361,8 +361,6 @@ sub read_comment {
 		}
 	}
 	# present the challenge
-	#my $options = { theme => 'red' };
-	#$template->param( captcha_options => $captcha->get_options_setter( $options ) );
 	$template->param( captcha => $captcha->get_html( $captcha_pubkey ) );
 }
 
