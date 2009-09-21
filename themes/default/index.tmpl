@@ -106,22 +106,24 @@
 		</div>
 		</TMPL_IF>
 	</div> <!-- end of #main -->
-	<div class="sidebar">
+	<div id="sidebar">
 		<div id="archive">
 			<h3>Archive</h3>
 			<TMPL_LOOP name="archives"> 
 			<ul>
-				<li class="year"><a href="/<TMPL_VAR name="year">/"><TMPL_VAR name="year"></a><span class="count"> (<TMPL_VAR name="count">)</span></li>
-				<TMPL_LOOP name="month_loop">
+				<li><a href="/<TMPL_VAR name="year">/"><TMPL_VAR name="year"></a><span class="count"> (<TMPL_VAR name="count">)</span>
 				<ul>
-					<li class="month"><a href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/"><TMPL_VAR name="month_name"></a><TMPL_IF name="count"><span class="count"> (<TMPL_VAR name="count">)</TMPL_IF></span></li>
-					<TMPL_LOOP name="uri_loop">
+				<TMPL_LOOP name="month_loop">
+					<li><a href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/"><TMPL_VAR name="month_name"></a><TMPL_IF name="count"><span class="count"> (<TMPL_VAR name="count">)</span></TMPL_IF>
 					<ul>
-						<li class="uri"><a title="<TMPL_VAR name="full_title">" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">"><TMPL_VAR name="title"></a></li>
-					</ul>
+					<TMPL_LOOP name="uri_loop">
+						<li><a title="<TMPL_VAR name="full_title">" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">"><TMPL_VAR name="title"></a></li>
 					</TMPL_LOOP>
-				</ul>
+					</ul>
+					</li>
 				</TMPL_LOOP>
+				</ul>
+				</li>
 			</ul>
 			</TMPL_LOOP>
 		</div>

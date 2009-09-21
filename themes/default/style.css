@@ -29,7 +29,7 @@ pre, tt { font-family: Courier; }
 #preview { padding: 0 5% 0; margin: 0 10% 10% 0; background-color: #fff; }
 
 /*article display*/
-.article { width: 100%; float:left; clear: none; position: relative; padding: 3% 0; }
+.article { width: 100%; padding: 3% 0; }
 .article h2 a { text-decoration: none; }
 .article h2 a, a#mod_story { color: #a14732; }
 .article h3 { margin: 18px 0 10px 0; }
@@ -42,25 +42,20 @@ pre, tt { font-family: Courier; }
 .article ul li span, .tags span { font-size: 0.7em; }
 .article ul li a, .tags span a { color: #09c; }
 .article .comments h4 { padding-top: 30px; }
-.article .comments h5 {font-size: 0.8em; font-weight: normal; }
+.article .comments h5 { font-size: 0.8em; font-weight: normal; }
 .article .comments h5 span { font-size: 1.0em; font-weight: bold; }
 .article .comments p { padding: 0 0 18px 10px; }
 .article .tags span a { text-decoration: none; border-bottom: 1px dashed; }
 
-/* sidebar archive/rss styles */
-.sidebar { width: 30%; float: right; padding-top: 2%; }
-.sidebar h3 { font-size: 1.1em; color: #777; padding: 4px 0 20px 20px; }
-.sidebar p a { color: #c66; text-decoration: none; }
-.sidebar #archive ul { padding: 0; list-style: none; margin: 0; }
-.sidebar #archive ul li.year { padding-left: 20px; }
-.sidebar #archive ul li.month { padding-left: 40px; }
-.sidebar #archive ul li.uri { padding-left: 60px; }
-.sidebar #archive ul li a { color: #c66; text-decoration: none; font-size: 0.9em; }
-.sidebar #archive ul li span.count { padding-left: 5px; color: #777; font-size: 0.8em; }
-.sidebar #feeds h3 { padding-top: 20px; padding-bottom: 10px; }
-.sidebar #feeds ul { padding: 0; list-style: none; margin: 0; }
-.sidebar #feeds ul li a { color: #c66; text-decoration: none; font-size: 0.9em; padding-left: 20px; }
-.sidebar #feeds img { padding-right: 7px; }
+/* #sidebar archive/rss styles */
+#sidebar { float: left; clear: none; position: relative; width: 30%; padding: 2% 0 0 5%; font-size: 0.8em; }
+#sidebar h3 { font-size: 1.4em; color: #777; padding: 4px 0 17px 0; }
+#sidebar ul { list-style: none; padding: 0; margin: 0; }
+#sidebar li span { color: #777; padding-left: 5px; }
+#sidebar a { color: #c66; text-decoration: none; font-weight: bold; }
+#sidebar ul li ul { padding-left: 20px; }
+#sidebar #feeds h3 { padding-top: 20px; padding-bottom: 10px; }
+#sidebar #feeds img { padding-right: 7px; }
 
 /* footer styles*/
 #footer { padding-top: 20px; clear: both; text-align: center; }
