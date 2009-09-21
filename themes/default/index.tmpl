@@ -115,11 +115,13 @@
 				<ul>
 				<TMPL_LOOP name="month_loop">
 					<li><a href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/"><TMPL_VAR name="month_name"></a><TMPL_IF name="count"><span class="count"> (<TMPL_VAR name="count">)</span></TMPL_IF>
+					<TMPL_IF name="uri_loop">
 					<ul>
 					<TMPL_LOOP name="uri_loop">
 						<li><a title="<TMPL_VAR name="full_title">" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">"><TMPL_VAR name="title"></a></li>
 					</TMPL_LOOP>
 					</ul>
+					</TMPL_IF>
 					</li>
 				</TMPL_LOOP>
 				</ul>

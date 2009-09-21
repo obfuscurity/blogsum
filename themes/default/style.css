@@ -1,4 +1,4 @@
-/* Global Styles */
+/* global styles */
 body { font-family: Georgia, Palatino, Palatino Linotype, Times, Times New Roman, serif; text-align: left }
 div, h1, h2, h3, h4, h5 { padding: 0; margin: 0; }
 h1 { font-size: 1.8em; }
@@ -28,7 +28,7 @@ pre, tt { font-family: Courier; }
 #mod_story_disabled { color: #999; }
 #preview { padding: 0 5% 0; margin: 0 10% 10% 0; background-color: #fff; }
 
-/*article display*/
+/* article display */
 .article { width: 100%; padding: 3% 0; }
 .article h2 a { text-decoration: none; }
 .article h2 a, a#mod_story { color: #a14732; }
@@ -47,7 +47,7 @@ pre, tt { font-family: Courier; }
 .article .comments p { padding: 0 0 18px 10px; }
 .article .tags span a { text-decoration: none; border-bottom: 1px dashed; }
 
-/* #sidebar archive/rss styles */
+/* sidebar archive/rss styles */
 #sidebar { float: left; clear: none; position: relative; width: 30%; padding: 2% 0 0 5%; font-size: 0.8em; }
 #sidebar h3 { font-size: 1.4em; color: #777; padding: 4px 0 17px 0; }
 #sidebar ul { list-style: none; padding: 0; margin: 0; }
@@ -57,7 +57,7 @@ pre, tt { font-family: Courier; }
 #sidebar #feeds h3 { padding-top: 20px; padding-bottom: 10px; }
 #sidebar #feeds img { padding-right: 7px; }
 
-/* footer styles*/
+/* footer styles */
 #footer { padding-top: 20px; clear: both; text-align: center; }
 #footer p { color: #aaa; }
 #footer hr { height: 1px; width: 35%; color: #999; background-color: #999; }
