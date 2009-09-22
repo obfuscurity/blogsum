@@ -60,10 +60,11 @@ pre, tt { font-family: Courier; }
 #sidebar #feeds img { padding-right: 7px; }
 
 /* footer styles */
-#footer { padding-top: 20px; clear: both; text-align: center; }
-#footer p { color: #aaa; }
-#footer hr { height: 1px; width: 35%; color: #999; background-color: #999; }
-#footer a { text-decoration: none; color: #09c; }
+#footer { padding-top: 5%; clear: both; text-align: center; }
+#footer ul { list-style: none; padding: 0; margin: 0; }
+#footer li { padding-bottom: 15px; color: #aaa; }
+#footer a { font-size: 0.9em; text-decoration: none; color: #777; }
+#footer a:hover { text-decoration: underline; color: #09c; }
 
 /* messages and debugging */
 h3.error { font-size: 1.1em; color: #c00; }
