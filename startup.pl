@@ -12,6 +12,7 @@ use HTML::Template;
 use XML::RSS;
 use Net::SMTP;
 use Captcha::reCAPTCHA;
+use HTTP::Config;
 use HTML::Entities;
 use HTTP::Request::Common;
 use URI::_foreign;
