@@ -67,7 +67,7 @@ pre, tt { font-family: Courier; }
 #footer a:hover { text-decoration: underline; color: #09c; }
 
 /* messages and debugging */
-h3.error { font-size: 1.1em; color: #c00; }
-h4.message { font-size: 0.9em; color: #060; }
+h3.error { padding-top: 2%; font-size: 1.1em; color: #c00; }
+h3.message { padding-top: 2%; font-size: 0.9em; color: #060; }
 pre#dump { background-color: #fff; }
 
