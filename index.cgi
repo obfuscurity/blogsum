@@ -303,23 +303,12 @@ sub format_tags {
 
 sub read_comment {
 
-	my $captcha = Captcha::reCAPTCHA->new;
-	my %friendly_errors = (
-			'invalid-site-public-key'	=> "oh noes, this shouldn't happen",
-			'invalid-site-private-key'	=> "oh noes, this shouldn't happen",
-			'invalid-request-cookie'	=> "oh noes, this shouldn't happen",
-			'verify-params-incorrect'	=> "oh noes, this shouldn't happen",
-			'invalid-referrer'			=> "oh noes, this shouldn't happen",
-			'recaptcha-not-reachable'	=> "oh noes, this shouldn't happen",
-			'incorrect-captcha-sol'		=> "oopsie, try again",
-	);
-
-	if ($cgi->param('recaptcha_response_field') && $cgi->param('comment') && $cgi->param('id')) {
+	if ($cgi->param('recaptcha_challenge_field') && $cgi->param('recaptcha_response_field') && $cgi->param('comment') && $cgi->param('id')) {
 
 		# test our captcha
-		my $result = $captcha->check_answer( $captcha_seckey, $ENV{'REMOTE_ADDR'}, $cgi->param('recaptcha_challenge_field'), $cgi->param('recaptcha_response_field') );
+		my $result = verify_captcha( $captcha_seckey, $ENV{'REMOTE_ADDR'}, $cgi->param('recaptcha_challenge_field'), $cgi->param('recaptcha_response_field') );
 
-		if ($result->{'is_valid'}) {
+		if ($result->{'success'}) {
 
 			# save comment
 			my $comment = HTML::Entities::encode($cgi->param('comment'));
@@ -348,16 +337,48 @@ sub read_comment {
 			$smtp->dataend(); 
 			$smtp->quit;
 		} else {
-			$template->param( error => $friendly_errors{ $result->{'error'} } );
+			my $error;
+			if ($result->{'error'} eq 'incorrect-captcha-sol') {
+				$error = 'failed challenge, please try again';
+			} else {
+				$error = 'Error: ' . $result->{'error'} . ', please report to site admin';
+			}
+			$template->param( error => $error );
 			$template->param( name => $cgi->param('name') );
 			$template->param( email => $cgi->param('email') );
 			$template->param( url => $cgi->param('url') );
 			$template->param( comment => $cgi->param('comment') );
 			$template->param( id => $cgi->param('id') );
+			$template->param( comment_form => 1 );
 		}
 	}
+
 	# present the challenge
-	$template->param( captcha => $captcha->get_html( $captcha_pubkey ) );
+	$template->param( captcha_api_server => 'http://api.recaptcha.net', captcha_pubkey => $captcha_pubkey );
+}
+
+sub verify_captcha {
+
+	my ( $privkey, $remoteip, $challenge, $response ) = @_;
+
+	my $http = HTTP::Lite->new();
+	$http->prepare_post(
+		{
+			privatekey => $privkey,
+			remoteip   => $remoteip,
+			challenge  => $challenge,
+			response   => $response
+		}
+	);
+	$http->request( 'http://api-verify.recaptcha.net/verify' );
+
+	if ( $http->status eq '200' ) {
+		my ( $answer, $message ) = split( /\n/, $http->body, 2 );
+		return { success => 1 } if ( $answer =~ /true/ );
+		return { success => 0, error => $message };
+	} else {
+		return { success => 0, error => 'recaptcha-not-reachable' };
+	}
 }
 
 sub get_comments {

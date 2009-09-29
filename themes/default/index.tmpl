@@ -99,7 +99,12 @@
 				<p>max length <TMPL_VAR name="comment_max_length"> chars<br>
 					<textarea rows="3" cols="30" name="comment"><TMPL_VAR name="comment"></textarea>
 				</p>
-				<TMPL_VAR name="captcha">
+				<script src="<TMPL_VAR name="captcha_api_server">/challenge?k=<TMPL_VAR name="captcha_pubkey">" type="text/javascript"></script>
+				<noscript>
+					<iframe frameborder="0" height="300" src="<TMPL_VAR name="captcha_api_server">/noscript?k=<TMPL_VAR name="captcha_pubkey">" width="500"></iframe>
+					<textarea cols="40" name="recaptcha_challenge_field" rows="3"></textarea>
+					<input name="recaptcha_response_field" type="hidden" value="manual_challenge">
+				</noscript>
 				<p><input type="submit" name="submit" value="submit comment"></p>
 				<input type="hidden" name="id" value="<TMPL_VAR name="id">">
 			</form>
