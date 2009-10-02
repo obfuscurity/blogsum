@@ -108,7 +108,8 @@ sub edit_article {
 		$template->param( id => $cgi->param('id') ) if ($cgi->param('id'));
 		$template->param( title => $cgi->param('title') ) if ($cgi->param('title'));
 		$template->param( uri => $uri ) if ($uri);
-		$template->param( body => $cgi->param('body') ) if ($cgi->param('body'));
+		$template->param( preview => $cgi->param('body') ) if ($cgi->param('body'));
+		$template->param( body => HTML::Entities::encode($cgi->param('body')) ) if ($cgi->param('body'));
 		$template->param( tags => $cgi->param('tags') ) if ($cgi->param('tags'));
 		print $cgi->header(), $template->output;
 
@@ -128,7 +129,8 @@ sub edit_article {
 			$template->param( id => $cgi->param('id') ) if ($cgi->param('id'));
 			$template->param( title => $cgi->param('title') ) if ($cgi->param('title'));
 			$template->param( uri => $cgi->param('uri') ) if ($cgi->param('uri'));
-			$template->param( body => $cgi->param('body') ) if ($cgi->param('body'));
+			$template->param( preview => $cgi->param('body') ) if ($cgi->param('body'));
+			$template->param( body => HTML::Entities::encode($cgi->param('body')) ) if ($cgi->param('body'));
 			$template->param( tags => $cgi->param('tags') ) if ($cgi->param('tags'));
 			print $cgi->header(), $template->output;
 		}
@@ -150,7 +152,8 @@ sub edit_article {
 			$template->param( id => $cgi->param('id') ) if ($cgi->param('id'));
 			$template->param( title => $cgi->param('title') ) if ($cgi->param('title'));
 			$template->param( uri => $cgi->param('uri') ) if ($cgi->param('uri'));
-			$template->param( body => $cgi->param('body') ) if ($cgi->param('body'));
+			$template->param( preview => $cgi->param('body') ) if ($cgi->param('body'));
+			$template->param( body => HTML::Entities::encode($cgi->param('body')) ) if ($cgi->param('body'));
 			$template->param( tags => $cgi->param('tags') ) if ($cgi->param('tags'));
 			print $cgi->header(), $template->output;
 		}
@@ -163,6 +166,8 @@ sub edit_article {
 		my $result = $sth->fetchrow_hashref;
 		if ($result) {
 			$template->param( view => $view, blog_title => $blog_title, edit => 1 );
+			$template->param( preview => $result->{'body'} );
+			$result->{'body'} = HTML::Entities::encode($result->{'body'});
 			$template->param( $result );
 			print $cgi->header(), $template->output;
 		} else {
