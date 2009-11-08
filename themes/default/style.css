@@ -56,8 +56,18 @@ pre, tt { font-family: Courier; }
 #sidebar li span { color: #777; padding-left: 5px; }
 #sidebar a { color: #c66; text-decoration: none; font-weight: bold; }
 #sidebar ul li ul { padding-left: 20px; }
+#sidebar #tagcloud h3 { padding-top: 20px; padding-bottom: 10px; }
 #sidebar #feeds h3 { padding-top: 20px; padding-bottom: 10px; }
 #sidebar #feeds img { padding-right: 7px; }
+
+/* tag cloud */
+#tagcloud li { display: inline; }
+#tagcloud .tagcloud_0 a { font-size: 1.2em; color: #a0afd9; }
+#tagcloud .tagcloud_1 a { font-size: 1.4em; color: #8ea0d2; }
+#tagcloud .tagcloud_2 a { font-size: 1.8em; color: #7c91cb; }
+#tagcloud .tagcloud_3 a { font-size: 2.2em; color: #6981c3; }
+#tagcloud .tagcloud_4 a { font-size: 2.5em; color: #5772bc; }
+#tagcloud .tagcloud_5 a { font-size: 2.8em; color: #4764b3; }
 
 /* footer styles */
 #footer { padding-top: 5%; clear: both; text-align: center; }

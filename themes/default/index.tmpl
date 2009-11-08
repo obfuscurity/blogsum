@@ -134,6 +134,14 @@
 			</ul>
 			</TMPL_LOOP>
 		</div>
+		<div id="tagcloud">
+			<h3>Tag Cloud</h3>
+			<ul>
+				<TMPL_LOOP name="tagcloud">
+				<li class="tagcloud_<TMPL_VAR name="scale">"><a href="/Tags/<TMPL_VAR name="tag">"><TMPL_VAR name="tag"></a></li>
+				</TMPL_LOOP>
+			</ul>
+		</div>
 		<div id="feeds">
 			<h3>Feeds</h3>
 			<ul>

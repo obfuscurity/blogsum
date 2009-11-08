@@ -26,6 +26,7 @@ my $smtp_sender = $Blogsum::Config::smtp_sender;
 my $articles_per_page = $Blogsum::Config::articles_per_page;
 my $google_analytics_id = $Blogsum::Config::google_analytics_id;
 my $google_webmaster_id = $Blogsum::Config::google_webmaster_id;
+my $max_tags_in_cloud = $Blogsum::Config::max_tags_in_cloud;
 
 
 ###########################
@@ -40,7 +41,9 @@ if ($cgi->param('rss')) {
 	read_comment() if $comments_allowed;
 	my $articles = get_articles();
 	my $archives = get_archives();
+	my $tagcloud = get_tag_cloud();
 	$template->param( archives => $archives );
+	$template->param( tagcloud => $tagcloud );
 	$template->param( theme => $blog_theme );
 	$template->param( title => $blog_title );
 	$template->param( subtitle => $blog_subtitle );
@@ -395,3 +398,46 @@ sub get_comments {
 	return \@comments;
 }
 
+sub get_tag_cloud {
+
+	my $query = 'SELECT tags FROM articles WHERE enabled=1';
+	my $sth = $dbh->prepare($query);
+	$sth->execute || die $dbh->errstr;
+
+	# create a frequency table keyed by tag
+	my %tags;
+	while (my $result = $sth->fetchrow_hashref) {
+		map { $tags{$_}++ } split(/,/, $result->{'tags'});
+	}
+
+	# estimate max and min values
+	my @values = sort {$b <=> $a} ( values %tags );
+	my $max = $values[0] || 1;
+	my $min = $values[$max_tags_in_cloud] || 0;
+
+	# scale %tags relative to each other unless $max == 1 which means all
+	# tags are equally weighted
+	unless ( $max == 1 ) {
+		for my $key (keys %tags) {
+			if ( $tags{$key} >= $min ) {
+				$tags{$key} = int( $tags{$key} / ( ($max-$min)/5 ) );
+			} else {
+				delete $tags{$key};
+			}
+		}
+	}
+
+	# build an HTML::Template friendly data structure
+	my @tag_cloud_data = ();
+	my $i = 1;
+	for my $key (sort keys %tags) {
+		last if $i++ > $max_tags_in_cloud;
+		my %row;
+		$row{'tag'} = $key;
+		$row{'scale'} = $tags{$key};
+		push(@tag_cloud_data, \%row);
+	}
+
+	return( \@tag_cloud_data );
+
+}
