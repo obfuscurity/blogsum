@@ -62,6 +62,7 @@ pre, tt { font-family: Courier; }
 
 /* tag cloud */
 #tagcloud li { display: inline; }
+#tagcloud .tagcloud_0 a { font-size: 0.9em; color: #a0afd9; }
 #tagcloud .tagcloud_1 a { font-size: 1.0em; color: #8ea0d2; }
 #tagcloud .tagcloud_2 a { font-size: 1.2em; color: #7c91cb; }
 #tagcloud .tagcloud_3 a { font-size: 1.5em; color: #6981c3; }
