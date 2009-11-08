@@ -67,6 +67,11 @@ sub manage_articles {
 		my $sth = $dbh->prepare($stmt);
 		$sth->execute($status, $article_id) || die $dbh->errstr;
 	}
+	if ($status == 1) {
+		my $stmt = "UPDATE articles SET date = datetime('now') WHERE id=?";
+		my $sth = $dbh->prepare($stmt);
+		$sth->execute($article_id) || die $dbh->errstr;
+	}
 
 	if (@{get_comments()} > 0) {
 		$template->param( comments_to_moderate => 1);
