@@ -169,7 +169,7 @@ sub get_articles {
 
 	my $query = 'SELECT *, strftime("%s", date) AS epoch FROM articles ' . $where_clause . 'ORDER BY date DESC' . $limit_clause;
 	my $sth = $dbh->prepare($query);
-	
+
 	if ($j == 3) {
 		$sth->execute($cgi->param('uri')) || die $dbh->errstr;
 	} elsif ($cgi->param('search')) {
@@ -285,7 +285,7 @@ sub get_archives {
 		}
 		push(@{$history{'year_loop'}}, $y) unless ($year eq 'count');
 	}
-		
+
 	return \@{$history{'year_loop'}};
 }
 
@@ -326,15 +326,15 @@ sub read_comment {
 			$smtp->mail($ENV{USER});
 			$smtp->to("$blog_owner\n");
 			$smtp->data();
-			$smtp->datasend("From: $smtp_sender\n"); 
+			$smtp->datasend("From: $smtp_sender\n");
 			$smtp->datasend("To: $blog_owner\n");
 			$smtp->datasend("Subject: $blog_title comment submission\n\n");
-			$smtp->datasend("You have received a new comment submission.\n\n"); 
+			$smtp->datasend("You have received a new comment submission.\n\n");
 			$smtp->datasend(sprintf("From: %s\n", $comment_name));
 			$smtp->datasend(sprintf("Date: %s\n", scalar(localtime)));
 			$smtp->datasend(sprintf("Comment:\n\"%s\"\n\n", $comment_body));
 			$smtp->datasend("Moderate comments at ${blog_url}admin.cgi?view=moderate\n");
-			$smtp->dataend(); 
+			$smtp->dataend();
 			$smtp->quit;
 		} else {
 			my $error;
@@ -389,7 +389,7 @@ sub get_comments {
 	my $sth = $dbh->prepare($query);
 	$sth->execute($args{'article_id'}, $args{'enabled'}) || die $dbh->errstr;
 	my @comments;
-	while (my $result = $sth->fetchrow_hashref) { 
+	while (my $result = $sth->fetchrow_hashref) {
 		push(@comments, $result);
 	}
 	return \@comments;

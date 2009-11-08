@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 	"http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -63,7 +63,7 @@
 		<TMPL_ELSE>
 			<img src="/themes/<TMPL_VAR name="theme">/images/draft-disabled.gif" alt="Draft">
 		</TMPL_IF>
-			<a title="Delete" href="/admin.cgi?view=administrate&delete=<TMPL_VAR name="id">"><img src="/themes/<TMPL_VAR name="theme">/images/delete.gif" alt="Delete"></a> &nbsp;&nbsp;&nbsp; 
+			<a title="Delete" href="/admin.cgi?view=administrate&delete=<TMPL_VAR name="id">"><img src="/themes/<TMPL_VAR name="theme">/images/delete.gif" alt="Delete"></a> &nbsp;&nbsp;&nbsp;
 		<TMPL_IF name="enabled">
 			<a id="mod_story" href="/<TMPL_VAR name="year">/<TMPL_VAR name="month">/<TMPL_VAR name="uri">" target="_new">
 		<TMPL_ELSE>
@@ -74,7 +74,7 @@
 			</a>
 		<TMPL_ELSE>
 			</span>
-		</TMPL_IF> 
+		</TMPL_IF>
 			&nbsp; submitted by <span id="mod_user"><TMPL_VAR name="author"></span>
 			on <span id="mod_date"><TMPL_VAR name="date"></span>
 		</p>
@@ -86,12 +86,12 @@
 	<TMPL_LOOP name="comments">
 		<hr style="height: 1px; width: 100%; color: #999; background-color: #999; border: 0;"></hr>
 		<p>
-			<a id="publish" href="/admin.cgi?view=moderate&publish=<TMPL_VAR name="id">"><img src="/themes/<TMPL_VAR name="theme">/images/check.gif" alt="Publish"></a> 
-			<a id="delete" href="/admin.cgi?view=moderate&delete=<TMPL_VAR name="id">"><img src="/themes/<TMPL_VAR name="theme">/images/delete.gif" alt="Delete"></a> 
-			&nbsp; comment in article &nbsp; 
+			<a id="publish" href="/admin.cgi?view=moderate&publish=<TMPL_VAR name="id">"><img src="/themes/<TMPL_VAR name="theme">/images/check.gif" alt="Publish"></a>
+			<a id="delete" href="/admin.cgi?view=moderate&delete=<TMPL_VAR name="id">"><img src="/themes/<TMPL_VAR name="theme">/images/delete.gif" alt="Delete"></a>
+			&nbsp; comment in article &nbsp;
 			<a id="mod_story" href="/<TMPL_VAR name="article_year">/<TMPL_VAR name="article_month">/<TMPL_VAR name="article_uri">" target="_new"><TMPL_VAR name="article_title"></a>
 			<br>
-			submitted by <span id="mod_user"><TMPL_VAR name="name"></span> 
+			submitted by <span id="mod_user"><TMPL_VAR name="name"></span>
 			at <TMPL_VAR name="date">
 		</p>
 		<p>

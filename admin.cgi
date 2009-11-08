@@ -208,7 +208,7 @@ sub get_comments {
 	$sth->execute() || die $dbh->errstr;
 
 	my @comments;
-	while (my $result = $sth->fetchrow_hashref) { 
+	while (my $result = $sth->fetchrow_hashref) {
 		$result->{'article_date'} =~ /(\d{4})\-(\d{2})\-\d{2} \d{2}\:\d{2}\:\d{2}/;
 		($result->{'article_year'}, $result->{'article_month'}) = ($1, $2);
 		$result->{'theme'} = $blog_theme;
