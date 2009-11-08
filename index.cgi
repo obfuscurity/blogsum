@@ -214,6 +214,7 @@ sub get_archives {
 	my %history;
 	my @archives;
 	my @archives_compressed;
+	my $current_month = $cgi->param('month') || sprintf("%0.2d", ((localtime)[4] + 1));
 	my $current_year = $cgi->param('year') || ((localtime)[5] + 1900);
 	my %months = (
 			'01' => 'January',
@@ -229,7 +230,6 @@ sub get_archives {
 			'11' => 'November',
 			'12' => 'December',
 	);
-	my $current_month = $cgi->param('month') || sprintf("%0.2d", ((localtime)[4] + 1));
 
 	my $query = 'SELECT * FROM articles WHERE enabled=1 ORDER BY date DESC';
 	my $sth = $dbh->prepare($query);
