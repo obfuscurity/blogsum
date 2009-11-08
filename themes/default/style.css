@@ -26,7 +26,7 @@ pre, tt { font-family: Courier; }
 #mod_story, #mod_story_disabled { font-size: 1.3em; font-weight: bold; }
 #mod_user, #mod_date { font-size: 1.1em; font-weight: bold; }
 #mod_story_disabled { color: #999; }
-#preview { padding: 3% 5%; margin: 0 10% 10% 0; background-color: #fff; border: 1px dotted black; }
+#preview { padding: 3% 5%; margin: 0 30% 10% 0; background-color: #fff; border: 1px dotted black; }
 #preview h2 { color: #a14732; }
 #preview div a { color: #a14732; text-decoration: none; border-bottom: 1px dashed; }
 
