@@ -297,7 +297,7 @@ sub format_tags {
 	my $tags = shift;
 	my @tags;
 
-	foreach (split(/,/, $tags)) {
+	foreach (split(/, */, $tags)) {
 		push(@tags, { 'tag' => $_ });
 	}
 
@@ -407,7 +407,7 @@ sub get_tag_cloud {
 	# create a frequency table keyed by tag
 	my %tags;
 	while (my $result = $sth->fetchrow_hashref) {
-		map { $tags{$_}++ } split(/,/, $result->{'tags'});
+		map { $tags{$_}++ } split(/, */, $result->{'tags'});
 	}
 
 	# estimate max and min values
