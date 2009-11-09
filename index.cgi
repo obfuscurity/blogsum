@@ -104,7 +104,7 @@ sub output_rss {
 				link => $link,
 				description => $item->{'body'},
 				author => $item->{'author'},
-				category => [split(/,/, $item->{'tags'})],
+				category => [split(/, */, $item->{'tags'})],
 				comments => $link . '#comments',
 				pubDate => POSIX::strftime("%a, %d %b %Y %H:%M:%S %Z", gmtime($item->{'epoch'})),
 			);
