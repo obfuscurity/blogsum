@@ -405,36 +405,24 @@ sub get_tag_cloud {
 	$sth->execute || die $dbh->errstr;
 
 	# create a frequency table keyed by tag
-	my %tags;
+	my %freq;
 	while (my $result = $sth->fetchrow_hashref) {
-		map { $tags{$_}++ } split(/, */, $result->{'tags'});
+		map { $freq{$_}++ } split(/, */, $result->{'tags'});
 	}
 
-	# estimate max and min values
-	my @values = sort {$b <=> $a} ( values %tags );
-	my $max = $values[0] || 1;
-	my $min = $values[$max_tags_in_cloud] || 0;
-
-	# scale %tags relative to each other unless $max == 1 which means all
-	# tags are equally weighted
-	unless ( $max == 1 ) {
-		for my $key (keys %tags) {
-			if ( $tags{$key} >= $min ) {
-				$tags{$key} = int( $tags{$key} / ( ($max-$min)/5 ) );
-			} else {
-				delete $tags{$key};
-			}
-		}
-	}
+	# calculate the scaling denominator
+	my @tags = sort { $freq{$b} <=> $freq{$a} } keys %freq;
+	@tags = splice @tags, 0, $max_tags_in_cloud;
+	my $denominator = $freq{ $tags[0] } == $freq{ $tags[-1] }
+			? ( 1 / 5 )
+			: ( $freq{ $tags[0] } - $freq{ $tags[-1] } ) / 5;
 
 	# build an HTML::Template friendly data structure
 	my @tag_cloud_data = ();
-	my $i = 1;
-	for my $key (sort { lc $a cmp lc $b } keys %tags) {
-		last if $i++ > $max_tags_in_cloud;
+	for my $tag (sort { lc $a cmp lc $b } @tags) {
 		my %row;
-		$row{'tag'} = $key;
-		$row{'scale'} = $tags{$key};
+		$row{'tag'} = $tag;
+		$row{'scale'} = int( $freq{$tag} / $denominator );
 		push(@tag_cloud_data, \%row);
 	}
 
