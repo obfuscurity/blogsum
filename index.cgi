@@ -422,7 +422,7 @@ sub get_tag_cloud {
 	for my $tag (sort { lc $a cmp lc $b } @tags) {
 		my %row;
 		$row{'tag'} = $tag;
-		$row{'scale'} = int( $freq{$tag} / $denominator );
+		$row{'scale'} = int( ( $freq{$tag} - $freq{ $tags[-1] } ) / $denominator );
 		push(@tag_cloud_data, \%row);
 	}
 

@@ -62,13 +62,12 @@ pre, tt { font-family: Courier; }
 
 /* tag cloud */
 #tagcloud li { display: inline; }
-#tagcloud .tagcloud_0 a { font-size: 0.9em; color: #a0afd9; }
-#tagcloud .tagcloud_1 a { font-size: 1.0em; color: #8ea0d2; }
-#tagcloud .tagcloud_2 a { font-size: 1.2em; color: #7c91cb; }
-#tagcloud .tagcloud_3 a { font-size: 1.5em; color: #6981c3; }
-#tagcloud .tagcloud_4 a { font-size: 1.8em; color: #5772bc; }
-#tagcloud .tagcloud_5 a { font-size: 2.1em; color: #4764b3; }
-#tagcloud .tagcloud_6 a { font-size: 2.4em; color: #405aa0; }
+#tagcloud .tagcloud_0 a { font-size: 1.0em; color: #8ea0d2; }
+#tagcloud .tagcloud_1 a { font-size: 1.2em; color: #7c91cb; }
+#tagcloud .tagcloud_2 a { font-size: 1.5em; color: #6981c3; }
+#tagcloud .tagcloud_3 a { font-size: 1.8em; color: #5772bc; }
+#tagcloud .tagcloud_4 a { font-size: 2.1em; color: #4764b3; }
+#tagcloud .tagcloud_5 a { font-size: 2.4em; color: #405aa0; }
 
 /* footer styles */
 #footer { padding-top: 5%; clear: both; text-align: center; }
