@@ -430,7 +430,7 @@ sub get_tag_cloud {
 	# build an HTML::Template friendly data structure
 	my @tag_cloud_data = ();
 	my $i = 1;
-	for my $key (sort keys %tags) {
+	for my $key (sort { lc $a cmp lc $b } keys %tags) {
 		last if $i++ > $max_tags_in_cloud;
 		my %row;
 		$row{'tag'} = $key;
