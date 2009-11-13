@@ -141,7 +141,6 @@ sub get_articles {
 		$page = 1;
 		$offset = 0;
 	}
-	$limit_clause = " LIMIT $articles_per_page OFFSET $offset";
 
 	if (($cgi->param('year') =~ /\d{4}/)&& (1900 < $cgi->param('year')) && ($cgi->param('year') < 2036)) {
 		$where_clause .= 'WHERE date LIKE \'%' . $cgi->param('year');
@@ -151,7 +150,6 @@ sub get_articles {
 			$j++;
 			if ($cgi->param('uri') =~ /\w+/) {
 				$where_clause .= 'AND uri=? AND enabled=1 ';
-				$limit_clause = '';
 				$j++;
 				$show_comments=1;
 			}
@@ -160,14 +158,15 @@ sub get_articles {
 		}
 	} elsif ($cgi->param('search')) {
 		$where_clause .= "WHERE (tags LIKE ? OR author LIKE ?) AND enabled=1 ";
+		$j++;
 
 	} elsif ($cgi->param('id')) {
 		$where_clause .= 'WHERE id=? AND enabled=1 ';
-		$limit_clause = '';
 		$show_comments=1;
 
 	} else {
 		$where_clause .= 'WHERE enabled=1 ';
+		$limit_clause = " LIMIT $articles_per_page OFFSET $offset";
 	}
 
 	my $query = 'SELECT *, strftime("%s", date) AS epoch FROM articles ' . $where_clause . 'ORDER BY date DESC' . $limit_clause;
