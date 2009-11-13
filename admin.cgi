@@ -68,7 +68,7 @@ sub manage_articles {
 		$sth->execute($status, $article_id) || die $dbh->errstr;
 	}
 	if ($status == 1) {
-		my $stmt = "UPDATE articles SET date = datetime('now') WHERE id=?";
+		my $stmt = "UPDATE articles SET date = datetime('now', 'localtime') WHERE id=?";
 		my $sth = $dbh->prepare($stmt);
 		$sth->execute($article_id) || die $dbh->errstr;
 	}
@@ -146,7 +146,7 @@ sub edit_article {
 			my $uri = $cgi->param('uri') || $cgi->param('title');
 			$uri =~ s/\ /\-/g;
 			my $author = $ENV{'REMOTE_USER'} || 'author';
-			my $stmt = "INSERT INTO articles VALUES (NULL, datetime('now'), ?, ?, ?, ?, 0, ?)";
+			my $stmt = "INSERT INTO articles VALUES (NULL, datetime('now', 'localtime'), ?, ?, ?, ?, 0, ?)";
 			my $sth = $dbh->prepare($stmt);
 			$sth->execute($cgi->param('title'), $uri, $cgi->param('body'), $cgi->param('tags'), $author) || die $dbh->errstr;
 			manage_articles();

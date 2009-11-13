@@ -315,7 +315,7 @@ sub read_comment {
 
 			# save comment
 			my $comment = HTML::Entities::encode($cgi->param('comment'));
-			my $stmt = "INSERT INTO comments VALUES (NULL, ?, datetime('now'), ?, ?, ?, ?, 0)";
+			my $stmt = "INSERT INTO comments VALUES (NULL, ?, datetime('now', 'localtime'), ?, ?, ?, ?, 0)";
 			my $sth = $dbh->prepare($stmt);
 			my $comment_name = $cgi->param('name') ? substr($cgi->param('name'), 0, 100) : 'anonymous';
 			my $comment_email = $cgi->param('email') ? substr($cgi->param('email'), 0, 100) : undef;
