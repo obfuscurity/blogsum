@@ -72,7 +72,7 @@ pre, tt { font-family: Courier; }
 /* footer styles */
 #footer { padding-top: 5%; clear: both; text-align: center; }
 #footer ul { list-style: none; padding: 0; margin: 0; }
-#footer li { padding-bottom: 15px; color: #aaa; }
+#footer li { padding: 15px 0; font-size: 0.9em; color: #aaa; border-top: 1px solid; }
 #footer a { font-size: 0.9em; text-decoration: none; color: #777; }
 #footer a:hover { text-decoration: underline; color: #09c; }
 
