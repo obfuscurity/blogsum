@@ -73,6 +73,8 @@ pre, tt { font-family: Courier; }
 #footer { padding-top: 5%; clear: both; text-align: center; }
 #footer ul { list-style: none; padding: 0; margin: 0; }
 #footer li { padding: 15px 0; font-size: 0.9em; color: #aaa; border-top: 1px solid; }
+#footer ul li.lastpage { float: left; border: none; }
+#footer ul li.nextpage { float: right; text-align: right; border: none; }
 #footer a { font-size: 0.9em; text-decoration: none; color: #777; }
 #footer a:hover { text-decoration: underline; color: #09c; }
 
