@@ -206,6 +206,7 @@ sub get_articles {
 	my $sth2 = $dbh->prepare($query2);
 	$sth2->execute || die $dbh->errstr;
 	my $article_count = $sth2->fetchrow_hashref->{'total'};
+	$template->param( page_prev => ($page - 1) ) if (($j == 0) && ($article_count > ($offset - $articles_per_page)));
 	$template->param( page_next => ($page + 1) ) if (($j == 0) && ($article_count > ($offset + $articles_per_page)));
 
 	return (\@articles);
