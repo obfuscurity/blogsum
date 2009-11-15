@@ -45,6 +45,7 @@ if ($cgi->param('rss')) {
 	$template->param( archives => $archives );
 	$template->param( tagcloud => $tagcloud );
 	$template->param( theme => $blog_theme );
+	$template->param( blog_url => $blog_url );
 	$template->param( title => $blog_title );
 	$template->param( subtitle => $blog_subtitle );
 	$template->param( copyright => $blog_rights );
