@@ -14,11 +14,11 @@ INSERT INTO "articles" VALUES(1,'2009-11-16 18:07:10','Welcome to Blogsum','Welc
 
 <h3>Managing Articles</h3>
 
-<p>As mentioned above, new articles are saved as a draft.  Click the publish <img align="absmiddle" src="/themes/default/images/play.gif"> button to see your post go live.  You can make edits <img align="absmiddle" src="/themes/default/images/plus.gif"> to a live article, but the timestamp won''t be updated unless you re-draft and re-publish the story. If you decide that you really want to remove an article from the administrate view, you can delete <img align="absmiddle" src="/themes/default/images/delete.gif"> it.</p>
+<p>As mentioned above, new articles are saved as a draft.  Click the <em>publish</em> <img align="absmiddle" src="/themes/default/images/play.gif"> button to see your post go live.  You can make <em>edits</em> <img align="absmiddle" src="/themes/default/images/plus.gif"> to a live article, but the timestamp won''t be updated unless you re-draft and re-publish the story. If you decide that you really want to remove an article from the administrate view, you can <em>delete</em> <img align="absmiddle" src="/themes/default/images/delete.gif"> it.</p>
 
 <h3>Comments and Moderation</h3>
 
-<p>Article comments are moderated and must be accompanied with a successful Captcha challenge. All user input is encoded to avoid XSS issues.  Click on the <em>moderate</em> view to approve <img align="absmiddle" src="/themes/default/images/check.gif"> or deny <img align="absmiddle" src="/themes/default/images/delete.gif"> a comment submission.</p>
+<p>Article comments are moderated and must be accompanied with a successful Captcha challenge. All user input is encoded to avoid XSS issues.  Click on the <em>moderate</em> view to <em>approve</em> <img align="absmiddle" src="/themes/default/images/check.gif"> or <em>deny</em> <img align="absmiddle" src="/themes/default/images/delete.gif"> a comment submission.</p>
 
 <h3>Using Tags</h3>
 
