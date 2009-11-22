@@ -29,9 +29,11 @@ pre, tt { font-family: Courier; }
 #preview { padding: 3% 5%; margin: 0 30% 10% 0; background-color: #fff; border: 1px dotted black; }
 #preview h2 { color: #a14732; }
 #preview div a { color: #a14732; text-decoration: none; border-bottom: 1px dashed; }
+#preview ul { padding: 0; list-style: none; }
 
 /* article display */
-.article { width: 100%; padding: 3% 0; }
+.article { width: 100%; padding: 4% 0; }
+.article h2 { border-bottom: 1px solid #ccc; }
 .article h2 a { text-decoration: none; }
 .article h2 a, a#mod_story { color: #a14732; }
 .article h3 { margin: 18px 0 10px 0; }
@@ -52,12 +54,12 @@ pre, tt { font-family: Courier; }
 /* sidebar archive/rss styles */
 #sidebar { float: left; clear: none; position: relative; width: 30%; padding: 2% 0 0 5%; font-size: 0.8em; }
 #sidebar h3 { font-size: 1.4em; color: #777; padding: 4px 0 17px 0; }
+#sidebar h3 { padding-bottom: 5px; margin-bottom: 10px; border-bottom: 1px solid #ccc; }
 #sidebar ul { list-style: none; padding: 0; margin: 0; }
 #sidebar li span { color: #777; padding-left: 5px; }
 #sidebar a { color: #c66; text-decoration: none; font-weight: bold; }
 #sidebar ul li ul { padding-left: 20px; }
-#sidebar #tagcloud h3 { padding-top: 20px; padding-bottom: 10px; }
-#sidebar #feeds h3 { padding-top: 20px; padding-bottom: 10px; }
+#sidebar #tagcloud h3, #feeds h3 { padding-top: 30px; }
 #sidebar #feeds img { padding-right: 7px; }
 
 /* tag cloud */
