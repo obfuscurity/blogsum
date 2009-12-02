@@ -14,6 +14,7 @@ my $blog_theme = $Blogsum::Config::blog_theme;
 my $blog_title = $Blogsum::Config::blog_title;
 my $blog_subtitle = $Blogsum::Config::blog_subtitle;
 my $blog_url = $Blogsum::Config::blog_url;
+$blog_url .= '/' unless ($blog_url =~ /^.*\/$/);
 my $blog_owner = $Blogsum::Config::blog_owner;
 my $blog_rights = $Blogsum::Config::blog_rights;
 my $feed_updates = $Blogsum::Config::feed_updates;
