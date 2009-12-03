@@ -147,7 +147,7 @@ sub get_articles {
 	if (($cgi->param('year') =~ /\d{4}/)&& (1900 < $cgi->param('year')) && ($cgi->param('year') < 2036)) {
 		$where_clause .= 'WHERE date LIKE \'%' . $cgi->param('year');
 		$j++;
-		if (($cgi->param('month') =~ /\d{2}/) && (0 < $cgi->param('month')) && ($cgi->param('month') < 12)) {
+		if (($cgi->param('month') =~ /\d{2}/) && (0 < $cgi->param('month')) && ($cgi->param('month') <= 12)) {
 			$where_clause .= '-' . $cgi->param('month') . '%\' AND enabled=1 ';
 			$j++;
 			if ($cgi->param('uri') =~ /\w+/) {
