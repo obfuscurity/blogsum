@@ -29,7 +29,7 @@ my $google_analytics_id = $Blogsum::Config::google_analytics_id;
 my $google_webmaster_id = $Blogsum::Config::google_webmaster_id;
 my $max_tags_in_cloud = $Blogsum::Config::max_tags_in_cloud;
 my $page_not_found_error = $Blogsum::Config::page_not_found_error;
-$page_not_found_error ||= 'page_not_found post not found';
+$page_not_found_error ||= '404 page not found';
 
 
 ###########################
