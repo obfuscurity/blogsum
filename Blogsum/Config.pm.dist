@@ -32,6 +32,7 @@ our $articles_per_page = '10';
 our $google_analytics_id = '';
 our $google_webmaster_id = '';
 our $max_tags_in_cloud = 20;
+our $page_not_found_error = '';
 
 1;
 

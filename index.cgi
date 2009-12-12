@@ -28,6 +28,8 @@ my $articles_per_page = $Blogsum::Config::articles_per_page;
 my $google_analytics_id = $Blogsum::Config::google_analytics_id;
 my $google_webmaster_id = $Blogsum::Config::google_webmaster_id;
 my $max_tags_in_cloud = $Blogsum::Config::max_tags_in_cloud;
+my $page_not_found_error = $Blogsum::Config::page_not_found_error;
+$page_not_found_error ||= 'page_not_found post not found';
 
 
 ###########################
@@ -60,7 +62,7 @@ if ($cgi->param('rss')) {
 			$template->param( id => $articles->[0]->{'id'} );
 		}
 	} else {
-		$template->param( error => '404 post not found' );
+		$template->param( error => $page_not_found_error );
 	}
 	print $cgi->header(), $template->output;
 }
