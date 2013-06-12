@@ -10,7 +10,9 @@ intended for OpenBSD users.
 
 OpenBSD -current users can install Blogsum from -current ports/packages. Blogsum (and dependency p5-HTTP-Lite) were added after OpenBSD 4.6.
 
-  $ sudo pkg_add -i blogsum
+```
+$ sudo pkg_add -i blogsum
+```
 
 And then follow the instructions in `/var/www/blogsum/docs/README.OpenBSD` to complete the setup. 
 
@@ -27,7 +29,9 @@ $ sudo /usr/local/sbin/mod_perl-enable
 
 Optional (needed for WordPress migration script):
 
-  $ sudo pkg_add -i p5-XML-Simple
+```
+$ sudo pkg_add -i p5-XML-Simple
+```
 
 #### Download
 
@@ -46,7 +50,9 @@ $ sudo chown -R www data
 
 Optional (for importing WordPress xml):
 
-  $ sudo examples/wp2blogsum.pl /path/to/export.xml data/site.db
+```
+$ sudo examples/wp2blogsum.pl /path/to/export.xml data/site.db
+```
 
 ### Configuring Blogsum
 
